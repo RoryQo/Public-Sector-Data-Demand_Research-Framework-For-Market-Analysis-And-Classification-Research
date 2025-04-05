@@ -10,7 +10,7 @@ The goal is to provide commercial data vendors with a replicable, high-precision
 
 ### Data and Scope
 
-The dataset includes 5,829 public sector job postings from U.S. government agencies. Each record contains:
+The dataset includes 5,829 public sector job postings from U.S. government agencies, retrieved via an API call to the publicly available USAJobs.gov database. Roughly 1/5 of these postings were flagged as likely third-party data buyers. Each record contains:
 
 - Unstructured text: `JobTitle`, `JobDescription`, `SearchKeywords`, `KeyDuties`
 - Categorical features: `Agency`, `Department`, `AgencySize`, `Industry`
