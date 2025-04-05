@@ -17,8 +17,8 @@ The dataset includes 5,829 public sector job postings from U.S. government agenc
 - Derived features: `DataBuyerScore`, `FuzzyMatchedPhrase`, `IsLikelyDataBuyer`
 
 Analysis was conducted using two primary notebooks:
-- `AA BSD Analysis.ipynb` – data cleaning, keyword labeling, sector tagging
-- `AA BSD Update (1).ipynb` – NLP modeling, use case mapping, statistical tests
+- `Data Aquisition and Wrangling.ipynb` – data cleaning, keyword labeling, sector tagging
+- `Modeling.ipynb` – NLP modeling, use case mapping, statistical tests
 
 ---
 
