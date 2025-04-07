@@ -1,5 +1,6 @@
 # Public-Sector-Data-Demand-Research-NLP
 
+
 ## Methodology
 
 This project analyzes public sector job postings to identify roles that are either explicitly or implicitly involved in third-party data acquisition — referred to throughout this report as “data buyers.” Using a blend of traditional keyword detection, fuzzy matching, rule-based tagging, and predictive modeling via natural language processing (NLP), this approach surfaces both overt and hidden demand for external data tools and services.
@@ -22,6 +23,23 @@ Analysis was conducted using two primary notebooks:
 
 ---
 
+### Text Normalization and Feature Engineering
+
+To prepare for classification and modeling, text fields were:
+
+- Lowercased and stripped of punctuation for consistency
+- Tokenized using standard NLP pipelines (`nltk`/`scikit-learn`)
+- Combined into a single field (`CombinedText`) for unified parsing
+
+From these fields, several features were created:
+
+- `IsSeniorRole`: flagged if title included “chief,” “director,” “senior,” “lead”
+- `IsExplicitDataJob`: flagged if title included “data,” “analyst,” “statistics,” or “information”
+- `AgencySize`: categorized into small, medium, or large using thresholds developed collaboratively with AI
+- `Industry`: assigned using department and title patterns
+
+---
+
 ### Labeling Explicit Data Buyers
 
 Initial classification used a **hybrid strategy**:
@@ -33,11 +51,13 @@ Initial classification used a **hybrid strategy**:
    - “procured dataset”
    - “market intelligence”
 2. **Fuzzy matching**: to capture variants such as “third party provider” or “external analytics vendor.”
-3. **Manual review**: to remove false positives, e.g., “Pharmacy Technician” or “Dental Assistant,” which sometimes triggered due to ambiguous phrases like “system management” or “data entry.”
+
 
 This created a labeled set of **explicit data buyers** that became the foundation for NLP model training and pattern detection.
 
 ---
+
+
 
 ### Sector and Use Case Classification
 
@@ -61,12 +81,29 @@ In addition, each posting was classified into up to four high-value **use cases*
 
 ### Natural Language Processing (NLP) Model
 
-To go beyond keyword logic, a **logistic regression NLP model** was trained on the explicitly labeled data buyers. This allowed us to classify additional roles based on how similar their text was to confirmed buyer jobs.
+### Why NLP Is Effective for This Project
+
+Natural Language Processing (NLP) enables pattern recognition at scale by understanding **how language is used**, not just what exact words are present. Public sector job titles and descriptions are highly inconsistent — NLP allows us to:
+
+- Classify ambiguous roles (e.g., “Program Analyst”) that describe analytics or vendor management
+- Generalize from confirmed buyers to latent ones using learned patterns
+- Scale scoring across future datasets or job boards with minimal manual tagging
+
+By training on real data buyers, the model reflects actual hiring language and captures demand that keyword-only methods miss.
+
+
+A **logistic regression NLP model** was trained on the explicitly labeled data buyers to go beyond keyword logic. This allowed us to classify additional roles based on how similar their text was to confirmed buyer jobs.
 
 #### Features:
 - TF-IDF vectorized text (from title, description, and keywords)
 - N-gram tokens (1- to 3-word combinations)
 - Structured metadata: `AgencySize`, `Industry`, `DataBuyerScore`, `IsSeniorRole`
+
+
+#### Training Set:
+- Labeled using the keyword + fuzzy match pipeline (true buyers)
+- Balanced sample of buyers and non-buyers
+
 
 #### Outputs:
 - A probability score (`PredictedDataBuyer`) for each job
@@ -76,6 +113,15 @@ This model allowed us to surface **latent data buyers** — jobs that don't use 
 
 ---
 
+
+#### Validation:
+- Accuracy and precision metrics reviewed
+- Compared output against manually verified samples
+- Reviewed top 50 false positives and false negatives for insights
+
+> 🔍 **Key modeling insight**: The NLP model revealed many hidden data buyer roles that used different language than the keywords — especially generalist roles like “Program Analyst” and “Grants Specialist.”
+
+---
 #### Oversight and False Negatives
 
 While the model performed well overall, a notable subset of **false negatives** emerged — roles that should not have been labeled as likely data buyers, yet were mistakenly flagged either through keyword matches or overgeneralized text patterns. These included:
@@ -93,7 +139,7 @@ To improve precision:
 - These titles were **manually removed from the buyer class** for all downstream statistical testing, modeling evaluation, and visualizations.
 - A refined set of **exclusionary keywords** was created to suppress these roles in future applications.
 
-> **Recommendation**: Continued human-in-the-loop review — especially from personnel with field expertise — is important to guide future tuning. Expert oversight can help identify new use case language, evolving terminology, and overlooked sectors.
+> **Recommendation**: Continued field expert oversight is important to guide future tuning. Expert oversight can help identify new use case language, evolving terminology, and overlooked sectors.
 
 Together, the NLP model and manual refinement process enable a reliable, adaptable framework for classifying and understanding public sector demand for external data.
 
@@ -111,12 +157,31 @@ The entire classification and scoring pipeline has been designed for **scalabili
 
 ---
 
+
+### Future Applications
+
+- **Job Board Monitoring**: Real-time scanning of USAJobs or state boards
+- **Agency Profiling**: Map departments to use case scores and buyer density
+- **Lead Scoring**: Prioritize outreach based on predicted data buyer likelihood
+- **Keyword Expansion**: Refine campaign targeting using evolving term patterns
+
+---
+
 ### Additional Considerations
 
 - **Posting Seasonality**: Hiring volume shifts over fiscal quarters; model should be rerun periodically.
 - **Role Ambiguity**: A “Program Analyst” in CDC is not the same as in GSA — departmental context matters.
 - **Proxy vs. Confirmation**: NLP scores and keyword matches reflect *intent*, not confirmed contract data. Still, strong patterns emerge across departments.
 - **Evolving Terminology**: Language around “LLMs,” “synthetic data,” or “real-time insight” is starting to appear — the keyword and model pipeline is built to evolve with these trends.
+
+---
+
+### Limitations
+
+- No access to actual procurement data — analysis infers *intent*, not confirmed purchases
+- Evolving language — terms like “audience segmentation” or “performance analytics” may shift over time
+- Context confusion — some words (e.g., “records,” “system,” “data entry”) appear across very different job types
+- Occasional false positives from operational roles (e.g., food service, dental support) remain possible without continued tuning
 
 ---
 
@@ -128,6 +193,11 @@ While only a fraction of public sector jobs explicitly mention third-party data 
 
 ---
 
+### Interpretation Note on Statistical Testing
+Statistical comparisons — including those related to seniority, agency size, sector, and use case alignment — were tested using the subset of explicitly labeled data buyers to confirm significance. These comparisons ensured that observed differences (e.g., between senior and non-senior roles, or across sectors) were not artifacts of modeling assumptions.
+
+Likewise, the tables and visualizations in the Market Analysis section reflect only these explicitly identified and fuzzy-matched data buyers. No roles classified solely by the NLP model are included in these summaries. This ensures that observed patterns are grounded in direct, interpretable evidence from job language rather than probabilistic inference.
+
 ### Use Case Alignment by Agency
 
 | Use Case               | High-Aligned Agencies                             | Buyer Role Share (%)       |
@@ -136,6 +206,9 @@ While only a fraction of public sector jobs explicitly mention third-party data 
 | Sentiment Analysis     | FEMA, HHS, CDC                                     | 40–60%                      |
 | Patient Matching       | VA Medical, IHS, DoD Medical                       | 70–80%                      |
 | Ad Targeting           | CDC Foundation, HHS Comms, FEMA                    | 35–45%                      |
+
+> **Note:** The "Buyer Role Share (%)" column reflects the **range of proportions** of data buyer jobs within each listed agency that are associated with the given use case. For example, 70–80% for patient matching means that among data buyer roles at VA Medical, IHS, and DoD Medical, between 70% and 80% are tagged as related to patient record matching. This indicates the **functional focus** of those agencies' data buyer roles.
+>
 
 ---
 
@@ -195,7 +268,7 @@ These were common in support or clinical jobs that mention records or systems, b
 
 Several significant patterns emerged across the classified and scored dataset:
 
-- **Seniority matters**: Jobs flagged as `IsSeniorRole = 1` were significantly more likely to be data buyers (*Welch’s t-test, p < 0.01*), particularly in smaller agencies with limited internal analytics capacity.
+- **Seniority doesnt matter**: Jobs flagged as `IsSeniorRole = 1` were not significantly more likely to be data buyers (*Welch’s t-test, p < 0.33*), however, particularly in smaller agencies with limited internal analytics capacity, seniority becomes slightly significant.
 - **Agency size effect**: Small and medium-sized agencies were more likely to embed data responsibilities in generalist or administrative roles (e.g., program coordinators, contract officers) instead of standalone analyst positions.
 - **Kurtosis in buyer score**: The `DataBuyerScore` exhibited **high kurtosis (>4)** — suggesting that most public jobs are definitively non-buyers, while a small, distinct cluster exhibit strong signals of buyer behavior.
 - **False positive clusters were removed**: Operational roles like “Pharmacy Technician” and “Food Service Worker” were initially over-flagged but manually excluded to improve model precision.
@@ -223,7 +296,7 @@ The VA dominates in both hiring volume and data buyer count, reflecting its oper
 Agencies with a **smaller total number of postings** but a **high proportion** of data buyer roles include:
 
 - Legislative Branch (e.g., research and communications offices)
-- FEMA and CDC (especially in communications, ad targetting, and outreach)
+- FEMA and CDC (especially in communications, ad targeting, and outreach)
 - Department of Justice (in legal compliance and fraud)
 
 These agencies should not be overlooked simply because of lower job counts — they often rely heavily on **external data vendors to fulfill narrow mission-critical functions**.
@@ -282,4 +355,6 @@ This suggests:
 Data buyers in government are not always called “data analysts.” They are Program Managers, Contract Officers, and Health IT Leads managing real-world platforms and workflows that depend on third-party data. 
 
 This analysis combines keyword matching, machine learning, and contextual classification to help vendors find these roles — and act on them. With an adaptable pipeline and strong textual patterns, this framework is not only accurate today, but built to evolve with the market.
+
+
 
