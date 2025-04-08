@@ -215,9 +215,9 @@ The distribution of `DataBuyerScore` reveals important patterns about the model'
 > **Key modeling insight**: The NLP model revealed many hidden data buyer roles that used different language than the keywords — especially generalist roles like “Program Analyst” and “Grants Specialist.”
 
 
-## Model Performance
+## Model Performance and Fit
 
-### Confusion Matrix
+### Performance
 
 | Metric         | Class 0 (Not a Buyer) | Class 1 (Likely Buyer) | Macro Avg | Weighted Avg |
 |----------------|------------------------|--------------------------|-----------|---------------|
@@ -240,30 +240,7 @@ The distribution of `DataBuyerScore` reveals important patterns about the model'
 - By focusing on **real job text** (title, description, and duties) and excluding engineered search terms (search keywords), the model maintains **generalizability and interpretability** across agencies and departments.
 
 
-### McFadden’s Pseudo R²
-
-**McFadden’s R²** is a commonly used metric to assess model fit in **logistic regression**. It serves as an analog to the traditional R² used in linear regression but is based on **log-likelihood** rather than variance. As a result, its values are typically **much lower** than what is considered “good” in linear models. In **social sciences**, a pseudo R² of **0.20 or higher** is often considered **good**, as it suggests the model explains a meaningful portion of the variation in the outcome, especially in the context of complex or noisy data like human behavior or public sector trends.
-
-> **Note:** McFadden’s R² values should **not** be directly compared to linear R² values — even models with **excellent fit** may only reach values around 0.3 to 0.4.
-
-Our model achieved a **McFadden's pseudo R² of 0.271**, indicating a **moderate to strong fit**. This confirms that the combination of text and metadata features contributes substantially to the model's ability to distinguish between data buyers and non-buyers.
-
-
-The formula is:
-
-```math
-R^2_{\text{McFadden}} = 1 - \frac{\log L_{\text{model}}}{\log L_{\text{null}}}
-```
-
-Where:
-- $\( \log L_{\text{model}} \)$ is the log-likelihood of the fitted model
-- $\( \log L_{\text{null}} \)$ is the log-likelihood of a null model with no predictors
-
----
-
-
-
-### Threshold Optimization
+#### Threshold Optimization on Performance
 
 To further improve performance, we applied **threshold optimization** by selecting the probability cutoff that maximized the **F1 score**. This process identified an **optimal threshold of 0.57**, which provided a better balance between precision and recall compared to the default threshold of 0.5.
 
@@ -292,6 +269,29 @@ To improve precision:
 > **Recommendation**: Continued field expert oversight is important to guide future tuning. Expert oversight can help identify new use case language, evolving terminology, and overlooked sectors.
 
 Together, the NLP model and manual refinement process enable a reliable, adaptable framework for classifying and understanding public sector demand for external data.
+
+---
+
+### Fit
+
+#### McFadden’s Pseudo R²
+
+**McFadden’s R²** is a commonly used metric to assess model fit in **logistic regression**. It serves as an analog to the traditional R² used in linear regression but is based on **log-likelihood** rather than variance. As a result, its values are typically **much lower** than what is considered “good” in linear models. In **economics**, a pseudo R² of **0.20 or higher** is often considered **good**, as it suggests the model explains a meaningful portion of the variation in the outcome, especially in the context of complex or noisy data like human behavior or public sector trends.
+
+> **Note:** McFadden’s R² values should **not** be directly compared to linear R² values — even models with **excellent fit** may only reach values around 0.3 to 0.4.
+
+Our model achieved a **McFadden's pseudo R² of 0.271**, indicating a **moderate to strong fit**. This confirms that the combination of text and metadata features contributes substantially to the model's ability to distinguish between data buyers and non-buyers.
+
+
+The formula is:
+
+```math
+R^2_{\text{McFadden}} = 1 - \frac{\log L_{\text{model}}}{\log L_{\text{null}}}
+```
+
+Where:
+- $\( \log L_{\text{model}} \)$ is the log-likelihood of the fitted model
+- $\( \log L_{\text{null}} \)$ is the log-likelihood of a null model with no predictors
 
 ---
 
