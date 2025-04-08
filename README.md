@@ -115,17 +115,38 @@ By training on real data buyers, the model reflects actual hiring language and c
 
 
 A logistic regression NLP model was trained on the explicitly labeled data buyers to go beyond keyword logic. Using TF-IDF features (including unigrams, bigrams, and trigrams) and structured metadata (agency size, role seniority, and industry), we classified additional roles based on linguistic and contextual similarity to known data buyer jobs. Class balancing via SMOTE significantly improved recall, ensuring high sensitivity for identifying emerging data buyer patterns in generalist and hybrid roles.
+    
+#### Formal Model Specification
+
+The model used is a **logistic regression**, estimated to classify federal job postings as either likely third-party data buyers or not.
+
+Let:
 
 
-#### Features:
+- $\( Y_i \in \{0, 1\} \)$ be a binary outcome variable indicating whether job $\( i \)$ is classified as a likely data buyer.
+- $\( \mathbf{X}_i \)$ be the feature vector for job $\( i \)$, including both structured metadata and TF-IDF vectorized text features.
+- $\( p_i = \mathbb{P}(Y_i = 1 \mid \mathbf{X}_i) \)$ be the predicted probability of being a data buyer.
 
-#### Text Features
 
-- TF-IDF vectorization (unigrams to trigrams)
-- Input sources: 
-  - `JobTitle`
-  - `JobDescription`
-  - `KeyDuties`
+The logistic regression model estimates:
+
+```math
+\log\left( \frac{p_i}{1 - p_i} \right) = \beta_0 + \sum_{j=1}^{k} \beta_j X_{ij}
+```
+
+Where:
+- $\( \beta_0 \)$ is the model intercept
+- $\( \beta_j \)$ are the estimated coefficients for features $\( X_{ij} \)$
+- The model uses **L2 regularization** and is trained using **maximum likelihood estimation** on a SMOTE-balanced training set
+
+### Feature Inputs
+
+1. **Text Features** (TF-IDF):
+   - N-grams (1 to 3 words) from:
+     - `JobTitle`
+     - `JobDescription`
+     - `KeyDuties`
+   - Top 5,000 tokens selected by frequency and importance
 
 To identify common language patterns associated with data-buying behavior:
  1. A bag-of-words and TF-IDF (term frequency-inverse document frequency) representation was generated from combined job text.
@@ -133,20 +154,18 @@ To identify common language patterns associated with data-buying behavior:
  3. N-grams (two- and three-word sequences) were extracted to capture meaningful phrases such as “market intelligence” or “patient matching.”
 
 
+2. **Structured Features**:
+   - `AgencySize` (one-hot encoded)
+   - `Industry` (derived from rule-based classifier, one-hot encoded)
+   - `IsSeniorRole` (derived by keyword matching in job titles, binary)
 
-#### Structured Features
- - `AgencySize` (one-hot encoded)
-  - `Industry` (classified by rule-based keyword matching, one-hot encoded)
-
-- **Binary feature**:
-  - `IsSeniorRole`, derived by keyword matching in job titles
-    
 #### Class Balancing
 - SMOTE (Synthetic Minority Oversampling Technique) was used to balance the training set for fair learning between buyers and non-buyers.
 
 #### Outputs:
-- A probability score (`PredictedDataBuyer`) for each job
-- Token weight coefficients, identifying influential terms
+- `PredictedLabel`: A binary classification (0 or 1) indicating likely buyer status.
+- `DataBuyerScore`: The predicted probability (∈ [0,1]) assigned by the model.
+- `Token Coefficients`: Feature weights extracted from the trained model to identify high-impact terms.
 
 This model allowed us to surface **latent data buyers** — jobs that don't use explicit terms but share linguistic patterns with confirmed buyers.
 
