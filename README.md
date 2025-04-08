@@ -230,7 +230,6 @@ The distribution of `DataBuyerScore` reveals important patterns about the model'
 <img src="https://github.com/RoryQo/MQE-BSD-Capstone-Project/blob/main/Rory%20Files/Figures/CF.png?raw=true" alt="Confusion Matrix" width="400"/>
 
 
-
 #### Interpretation
 
 - The model achieves strong **overall accuracy** (89.6%) across thousands of public sector job listings.
@@ -238,6 +237,14 @@ The distribution of `DataBuyerScore` reveals important patterns about the model'
 - **Precision is moderate** (61.4%), which makes this model well-suited for **broad lead discovery** and outreach where recall matters more than strict precision.
 - The inclusion of `Industry`, `AgencySize`, and `IsSeniorRole` as structured features adds **contextual richness**, helping the model distinguish buyers embedded in generalist, administrative, or hybrid roles.
 - By focusing on **real job text** (title, description, and duties) and excluding engineered search terms (search keywords), the model maintains **generalizability and interpretability** across agencies and departments.
+
+#### Log Loss
+
+- **Log Loss Score (Model):** `0.316`
+
+Log loss evaluates how well the predicted probabilities align with actual class labels, penalizing incorrect predictions more harshly when they are overly confident. Our model’s log loss score of **0.316** represents a substantial improvement over the naïve baseline score of **0.690**, which reflects a model that always predicts the average class probability. This improvement confirms that our model generates **well-calibrated, informative probabilities**.
+
+Importantly, this score aligns with our earlier observation that **most predicted probabilities fall between 0.1 and 0.6**, indicating the model is not overly confident in its predictions. This moderate range of scores suggests the model is capturing real-world ambiguity—providing nuanced, probabilistic estimates instead of binary, all-or-nothing outputs. That calibration helps lower log loss and supports more effective prioritization and ranking of potential leads.
 
 
 #### Threshold Optimization on Performance
