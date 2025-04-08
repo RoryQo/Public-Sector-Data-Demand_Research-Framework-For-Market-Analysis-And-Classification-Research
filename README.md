@@ -1,4 +1,26 @@
-# Public-Sector-Data-Demand-Research-NLP
+
+# Overview
+
+## Identifying Data Buyer Roles in Government Job Postings
+
+This project analyzes thousands of U.S. federal government job postings scraped from the USAJOBS public API to identify roles that are likely engaged in purchasing or using third-party data. Many such roles are not explicitly labeled as “data buyer” positions, but contain textual and structural signals indicating involvement with vendor platforms, data subscriptions, analytics integration, or fraud detection tools.
+
+To uncover these latent buyer roles, we trained a logistic regression classification model using TF-IDF features derived from job titles, descriptions, and key duties, alongside structured metadata like agency size, industry classification, and role seniority. Training data was built from a curated set of known buyers identified through keyword and fuzzy matching logic. The model was then applied across the full dataset to assign each job a probability score—used to assess buying likelihood and analyze broader trends.
+
+The project goes beyond role-level classification to map how data use cases such as fraud detection, sentiment analysis, patient matching, and ad targeting show up across agencies and sectors. Through visualization and scoring, it highlights which parts of government are functionally reliant on third-party data, even when job titles and duties don’t explicitly say so.
+
+This work provides value to vendors seeking to identify government demand for external data, researchers studying digital public infrastructure, and policymakers interested in how data-driven functions are operationalized in the federal workforce.
+
+## Applications
+
+- **Lead Prioritization for Data Vendors**: Identify which agencies, offices, and job roles are most likely to rely on third-party data providers.
+- **Labor Market Insights**: Reveal how data-related responsibilities are evolving across federal hiring.
+- **Procurement and Policy Research**: Analyze how public sector roles incorporate vendor engagement, analytics tools, and compliance monitoring through language in job postings.
+- **Market Alignment for Data Vendors**: Help commercial data providers identify public sector job functions that align with their product offerings based on job language and organizational context.
+  
+
+
+# Methodology and Market Analysis
 
 
 ## Methodology
@@ -15,7 +37,7 @@ The dataset includes 5,829 public sector job postings from U.S. government agenc
 
 - Unstructured text: `JobTitle`, `JobDescription`, `SearchKeywords`, `KeyDuties`
 - Categorical features: `Agency`, `Department`, `AgencySize`, `Industry`
-- Derived features: `DataBuyerScore`, `FuzzyMatchedPhrase`, `IsLikelyDataBuyer`
+- Derived features: `FuzzyMatchedPhrase`, `IsLikelyDataBuyer`, 'Sector'
 
 Analysis was conducted using two primary notebooks:
 - `Data Aquisition and Wrangling.ipynb` – data cleaning, keyword labeling, sector tagging
@@ -33,7 +55,7 @@ To prepare for classification and modeling, text fields were:
 
 From these fields, several features were created:
 
-- `IsSeniorRole`: flagged if title included “chief,” “director,” “senior,” “lead”
+- `IsSeniorRole`: flagged if title included “chief,” “director,” “senior,” “lead”, "Sr.", "senior"
 - `IsExplicitDataJob`: flagged if title included “data,” “analyst,” “statistics,” or “information”
 - `AgencySize`: categorized into small, medium, or large using thresholds developed collaboratively with AI
 - `Industry`: assigned using department and title patterns
@@ -92,16 +114,25 @@ Natural Language Processing (NLP) enables pattern recognition at scale by unders
 By training on real data buyers, the model reflects actual hiring language and captures demand that keyword-only methods miss.
 
 
-A logistic regression NLP model was trained on the explicitly labeled data buyers to go beyond keyword logic. Using TF-IDF features (including unigrams, bigrams, and trigrams) and structured metadata (agency size, role seniority, data buyer scores), we classified additional roles based on linguistic and contextual similarity to known data buyer jobs. Class balancing via SMOTE significantly improved recall, ensuring high sensitivity for identifying emerging data buyer patterns in generalist and hybrid roles.
+A logistic regression NLP model was trained on the explicitly labeled data buyers to go beyond keyword logic. Using TF-IDF features (including unigrams, bigrams, and trigrams) and structured metadata (agency size, role seniority, and industry), we classified additional roles based on linguistic and contextual similarity to known data buyer jobs. Class balancing via SMOTE significantly improved recall, ensuring high sensitivity for identifying emerging data buyer patterns in generalist and hybrid roles.
+
 
 #### Features:
 
 #### Text Features
+
 - TF-IDF vectorization (unigrams to trigrams)
 - Input sources: 
   - `JobTitle`
   - `JobDescription`
   - `KeyDuties`
+
+To identify common language patterns associated with data-buying behavior:
+ 1. A bag-of-words and TF-IDF (term frequency-inverse document frequency) representation was generated from combined job text.
+ 2. Keyword importance was assessed by comparing term frequencies between data buyer and non-data buyer job postings.
+ 3. N-grams (two- and three-word sequences) were extracted to capture meaningful phrases such as “market intelligence” or “patient matching.”
+
+
 
 #### Structured Features
 - `AgencySize`
@@ -116,6 +147,41 @@ A logistic regression NLP model was trained on the explicitly labeled data buyer
 - Token weight coefficients, identifying influential terms
 
 This model allowed us to surface **latent data buyers** — jobs that don't use explicit terms but share linguistic patterns with confirmed buyers.
+
+---
+
+### Interpretation of DataBuyerScore Distribution
+
+The distribution of `DataBuyerScore` reveals important patterns about the model's confidence and behavior in classifying likely data buyers.
+
+<img src="https://github.com/RoryQo/MQE-BSD-Capstone-Project/blob/main/Rory%20Files/Figures/download%20(8).png?raw=true" alt="DataBuyerScore Distribution" width=600/>
+
+
+#### Distribution Overview
+
+- The histogram shows a **long right tail**: while most jobs have low to moderate scores, a smaller cluster of jobs receive very high scores (close to 1.0).
+- A **significant number of jobs are scored near 0**, indicating high confidence that these are not buyer roles.
+- The middle of the distribution (scores between 0.1 and 0.6) is broad, reflecting many cases where the model has moderate or uncertain confidence.
+
+#### Kurtosis: -0.24
+
+- The `DataBuyerScore` has a **slightly negative kurtosis** of **-0.24**, indicating a **flatter-than-normal distribution** (platykurtic).
+- This confirms what the histogram suggests: the model does not produce a sharply peaked distribution with extreme outliers.
+- Scores are more **evenly spread**, with fewer strong peaks or long tails than a normal distribution.
+
+### Implications
+
+| Insight | Implication |
+|--------|-------------|
+| Model is not overly confident | Most jobs fall between 0.1 and 0.6 — suggesting nuanced scoring rather than binary separation. |
+| Few extremely high scores | High-scoring jobs (e.g., > 0.8) likely represent very clear data buyer roles. |
+| Wide mid-range of scores | Many jobs have ambiguous or mixed signals, such as hybrid roles or vague language. |
+| Low kurtosis confirms flat shape | There is no strong clustering — scores are widely distributed across the range. |
+
+### Possible Additional Implementations
+
+- **Ranking**: Treat the score as a priority index for outreach or further human review.
+- **Thresholding**: Use score bands (e.g., > 0.7 = likely buyer, 0.4–0.7 = possible, < 0.4 = unlikely) for segmentation.
 
 ---
 
@@ -218,7 +284,7 @@ The entire classification and scoring pipeline has been designed for **scalabili
 
 ### Overview
 
-While only a fraction of public sector jobs explicitly mention third-party data vendors, many reference tasks, platforms, or responsibilities that imply it. This analysis surfaces which **roles**, **sectors**, and **agencies** are most likely to be engaging in data buying, either directly or through embedded programmatic work.
+Public sector organizations are increasingly turning to third-party data to support operational efficiency, improve service delivery, and drive evidence-based policy. This trend is evident across job postings that explicitly or implicitly reference the use, procurement, or integration of external data sources. A close analysis of public sector job language reveals demand for data tools and services across a diverse range of functions, not just IT or analytics.
 
 ---
 
@@ -250,13 +316,15 @@ Likewise, the tables and visualizations in the Market Analysis section reflect o
 | Policy & Legal      | Sentiment, Compliance      | DOJ, State Department              |
 | Tech & Security     |Fraud Detection     | DoD, NSA, DHS                      |
 
-
-
 ---
 
 ### Key Roles and Latent Buyers
 
-Roles flagged by the model as likely data buyers — even without “data” in the title:
+**1. Data Buying Roles Appear in Non-Data Job Titles**
+
+A large proportion of roles classified as likely data buyers do not carry traditional data science or analysis titles. In smaller agencies especially, data acquisition responsibilities are often embedded in roles like procurement specialists, operations coordinators, and public health administrators.
+
+Roles flagged by explicit labeling as data buyers — even without “data” in the title or a technical role:
 
 - Contract Specialist
 - Program Analyst
@@ -267,7 +335,7 @@ Roles flagged by the model as likely data buyers — even without “data” in 
 - Communications Strategist
 - Budget Officer
 
-These roles frequently involve vendor management, platform evaluation, fraud analysis, campaign tracking, and operational analytics — all indicating third-party data use.
+These roles frequently involve vendor management, platform evaluation, fraud analysis, campaign tracking, and operational analytics — all indicating third-party data use- a useful commonality that the nlp might be able to put to contextual use.
 
 ---
 
@@ -307,18 +375,38 @@ These were common in support or clinical jobs that mention records or systems, b
 
 ---
 
-### Statistical Patterns
+## Statistical Patterns in Data Buyer Classification
 
-Several significant patterns emerged across the classified and scored dataset:
+Several statistically observable patterns emerged in the structured and text-based scoring of government job postings using raw observations and the trained NLP model.
 
-- **Seniority doesnt matter**: Jobs flagged as `IsSeniorRole = 1` were not significantly more likely to be data buyers (*Welch’s t-test, p < 0.33*), however, particularly in smaller agencies with limited internal analytics capacity, seniority becomes slightly significant.
-- **Agency size effect**: Small and medium-sized agencies were more likely to embed data responsibilities in generalist or administrative roles (e.g., program coordinators, contract officers) instead of standalone analyst positions.
-- **Kurtosis in buyer score**: The `DataBuyerScore` exhibited **high kurtosis (>4)** — suggesting that most public jobs are definitively non-buyers, while a small, distinct cluster exhibit strong signals of buyer behavior.
+### 1. Seniority Doesn’t Always Matter
+
+Jobs flagged as `IsSeniorRole = 1` were not significantly more likely to be data buyers in the aggregate (*Welch’s t-test, p = 0.33*). This challenges the assumption that data purchasing is mostly confined to senior leadership or executive-level roles.
+
+However, a contextual pattern was observed:
+- In **smaller agencies**, seniority becomes a **mild predictor** of data buying behavior.
+- This likely reflects generalist environments where senior program managers oversee multiple responsibilities — including analytics, procurement, and vendor coordination.
+
+**Implication**: Seniority alone isn’t a strong signal of buyer behavior, but in under-resourced agencies, senior generalists often assume buyer-like roles.
+
+---
+
+### 2. Agency Size Effect
+
+Smaller and mid-sized agencies are more likely to embed data responsibilities in **generalist or administrative titles**, rather than posting explicitly labeled analyst roles. Examples include:
+
+- Contracting Officers managing third-party data subscriptions
+- Program Analysts coordinating vendor platforms
+- Grants Officers using external data to evaluate program outcomes
+
+Larger agencies (e.g., VA, DoD, HHS) more frequently post **specialized analyst roles**, making their buyer signals easier to detect via job title alone.
+
+**Implication**: Vendors targeting smaller agencies should pay close attention to generalist or hybrid roles with cross-functional responsibilities.
 
 
 ---
 
-### Data Buyer Volume and Concentration by Agency and Sector
+### 3. Data Buyer Volume and Concentration by Agency and Sector
 
 In addition to use case and title-level signals, we evaluated which **agencies and sectors** are most strongly associated with data buyers.
 
@@ -402,9 +490,16 @@ This suggests:
 | Ad Targeting       | CDC Foundation, FEMA, HHS Comms  | Segmentation, outreach optimization        |
 
 **Go-to-market guidance**:
-- Prioritize hybrid roles and generalists in small or mid-sized agencies.
-- Use job scoring outputs for lead segmentation and follow-up prioritization.
+1. **Broaden Targeting Criteria**: Sales and engagement strategies should include procurement and programmatic roles, not just technical ones.
+2. **Segment Leads by Use Case**: Assign agencies to fraud, health, sentiment, or targeting use cases based on job text for tailored outreach.
+3. **Prioritize Smaller Agencies for Embedded Data Needs**: These agencies are more likely to seek turnkey or vendor-supplied solutions, even within non-specialist roles.
+4. **Use Percent-Based Use Case Scores**: Identify niche or emerging opportunities even in agencies with low total hiring volume.
+
+**Continual Considerations**:
 - Monitor changes in job language using keyword tracking + token weights.
+- Use job scoring outputs for lead segmentation and follow-up prioritization.
+- Prioritize hybrid roles and generalists in small or mid-sized agencies.
+
 
 ---
 
@@ -413,7 +508,5 @@ This suggests:
 Data buyers in government are not always called “data analysts.” They are Program Managers, Contract Officers, and Health IT Leads managing real-world platforms and workflows that depend on third-party data. 
 
 This analysis combines keyword matching, machine learning, and contextual classification to help vendors find these roles — and act on them. With an adaptable pipeline and strong textual patterns, this framework is not only accurate today, but built to evolve with the market.
-
-
 
 
