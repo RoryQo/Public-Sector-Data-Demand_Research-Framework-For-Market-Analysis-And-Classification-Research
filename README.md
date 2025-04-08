@@ -135,10 +135,12 @@ To identify common language patterns associated with data-buying behavior:
 
 
 #### Structured Features
-- `AgencySize`
-- `Industry` (automatically classified from job language,(same as sector))
-- `IsSeniorRole` (inferred from title keywords like "Director", "Manager", etc.)
+ - `AgencySize` (one-hot encoded)
+  - `Industry` (classified by rule-based keyword matching, one-hot encoded)
 
+- **Binary feature**:
+  - `IsSeniorRole`, derived by keyword matching in job titles
+    
 #### Class Balancing
 - SMOTE (Synthetic Minority Oversampling Technique) was used to balance the training set for fair learning between buyers and non-buyers.
 
