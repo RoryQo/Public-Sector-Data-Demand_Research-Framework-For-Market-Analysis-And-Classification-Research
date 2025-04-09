@@ -37,7 +37,7 @@ The dataset includes 5,829 public sector job postings from U.S. government agenc
 
 - Unstructured text: `JobTitle`, `JobDescription`, `SearchKeywords`, `KeyDuties`
 - Categorical features: `Agency`, `Department`, `AgencySize`, `Industry`
-- Derived features: `FuzzyMatchedPhrase`, `IsLikelyDataBuyer`, 'Sector'
+- Derived features: `FuzzyMatchedPhrase`, `IsLikelyDataBuyer`, `sector`, `explicit data job`, `generalist`, `search keyword`
 
 Analysis was conducted using two primary notebooks:
 - `Data Aquisition and Wrangling.ipynb` – data cleaning, keyword labeling, sector tagging
@@ -81,16 +81,28 @@ This created a labeled set of **explicit data buyers** that became the foundatio
 
 
 
-### Sector and Use Case Classification
+### Industry Classification
 
-Each job was tagged to one or more of the following sectors:
-- **Health & Medical**
-- **Finance & Oversight**
-- **Communications & Outreach**
-- **Policy & Legal**
-- **Technology & Security**
+Created a derived `Industry` column using a **keyword-based classification function**. This method scans multiple fields in each job posting — specifically `JobTitle`, `Department`, and `SearchKeywords` — and assigns a sector based on the presence of domain-specific terms.
 
-In addition, each posting was classified into up to four high-value **use cases**:
+
+Each job was tagged to one or more of the following industries:
+
+| Industry        | Example Keywords                                                       |
+|-----------------|------------------------------------------------------------------------|
+| Finance         | “finance,” “financial,” “account,” “budget”                            |
+| Marketing       | “marketing,” “communications,” “advertising”                           |
+| Medical         | “medical,” “pharmacy,” “nurse,” “health,” “clinical”                   |
+| Security/Tech   | “cyber,” “security,” “information technology,” “software,” “tech”      |
+| Policy          | “policy,” “regulation,” “legislative,” “analyst,” “compliance”         |
+| Other           | Default category for postings that do not match the above keywords     |
+
+### Use Case
+
+**Use case indicators** based on keyword detection in the `CombinedText` field (which merges job title, description, and duties). 
+
+These flags reveal the functional needs of each role, helping data vendors assess product fit and agency compatibility.
+
 
 | Use Case               | Example Keywords                                                   |
 |------------------------|---------------------------------------------------------------------|
@@ -98,6 +110,27 @@ In addition, each posting was classified into up to four high-value **use cases*
 | Sentiment Analysis     | “public opinion,” “media analytics,” “feedback loop”              |
 | Patient Record Matching| “EHR,” “interoperability,” “data linkage,” “record integration”    |
 | Ad Targeting           | “audience segmentation,” “campaign optimization,” “targeting data” |
+
+---
+
+### Search Keyword
+
+To explore how job postings aligned with specific public sector data use cases, we implemented a **keyword-based tagging system**. This allowed us to surface jobs relevant to particular themes — such as **data**, **security**, **technology**, or **research** — and analyze how those align with sector and buyer signals.
+
+- **One record per job**: Even if a job matches multiple keywords, it is only counted once in the dataset.
+- **All matched keywords stored**: Jobs that trigger multiple matches retain all triggering keywords for analysis (e.g., a posting may match both `data` and `security`).
+- This allows us to identify **overlapping themes** and understand which jobs represent **hybrid use cases** or cross-cutting responsibilities.
+
+---
+
+### Role Signals
+
+To better understand how job function relates to data-buying behavior, we created two **keyword-based role indicators** using simple **string matching techniques** from the `JobTitle` field.
+
+- **Generalist Role**: Flags job postings with titles that match a predefined list of common **generalist roles** such as *Affairs Officer*, *Contract Specialist*, or *Coordinator*. 
+
+- **Senior Role**: Flags postings where the job title contains seniority-related **keywords** such as *senior*, *chief*, *director*, *lead*, *principal*, or *head*. 
+
 
 ---
 
