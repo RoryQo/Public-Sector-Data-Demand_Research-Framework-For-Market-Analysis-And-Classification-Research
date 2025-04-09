@@ -59,6 +59,8 @@ From these fields, several features were created:
 - `IsExplicitDataJob`: flagged if title included “data,” “analyst,” “statistics,” or “information”
 - `AgencySize`: categorized into small, medium, or large using thresholds developed collaboratively with AI
 - `Industry`: assigned using department and title patterns
+- `IsGeneralistRole`: Flagged if the job title matched common generalist roles such as “Program Analyst,” “Contract Specialist,” or “Budget Officer” — roles that may be involved in procurement, coordination, or administrative tasks related to data, especially in smaller agencies.
+- `SearchKeyword`: Created through a keyword-based tagging system designed to surface job postings aligned with public sector data buying positions.
 
 ---
 
@@ -120,17 +122,6 @@ To explore how job postings aligned with specific public sector data use cases, 
 - **One record per job**: Even if a job matches multiple keywords, it is only counted once in the dataset.
 - **All matched keywords stored**: Jobs that trigger multiple matches retain all triggering keywords for analysis (e.g., a posting may match both `data` and `security`).
 - This allows us to identify **overlapping themes** and understand which jobs represent **hybrid use cases** or cross-cutting responsibilities.
-
----
-
-### Role Signals
-
-To better understand how job function relates to data-buying behavior, we created two **keyword-based role indicators** using simple **string matching techniques** from the `JobTitle` field.
-
-- **Generalist Role**: Flags job postings with titles that match a predefined list of common **generalist roles** such as *Affairs Officer*, *Contract Specialist*, or *Coordinator*. 
-
-- **Senior Role**: Flags postings where the job title contains seniority-related **keywords** such as *senior*, *chief*, *director*, *lead*, *principal*, or *head*. 
-
 
 ---
 
