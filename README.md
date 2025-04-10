@@ -467,10 +467,27 @@ That said, **agency size introduces meaningful context**:
 - In **large agencies**, the opposite pattern emerged — senior roles were *somewhat more likely* to be buyers.
 - Neither result was statistically significant, but the reversal in trend hints at structural differences.
 
+
 **Interpretation**: Seniority alone isn’t a strong predictor of buyer behavior. But in **larger, more hierarchical agencies**, senior staff may be more involved in procurement decisions. In **smaller agencies**, the distinction between senior and non-senior roles may blur, with non-senior staff taking on broader responsibilities, including vendor coordination.
+
 ---
 
-### 2. Agency Size Effect
+ ### 2. Smaller Agencies Are Statistically More Likely to Contain Buyer Roles
+
+When comparing buyer-likelihood across agency sizes, smaller agencies show a **significantly higher proportion** of roles classified as likely data buyers.
+
+- **Small agencies** had a buyer likelihood close to **19%**
+- **Medium agencies** followed at **~17%**
+- **Large agencies** trailed at **~15%**
+- Welch’s t-test between small and large agencies yielded a **t-statistic of -2.912** and **p-value of 0.0036**, indicating a statistically significant difference.
+
+  <img src="https://github.com/RoryQo/MQE-BSD-Capstone-Project/blob/main/Rory%20Files/Figures/size.png?raw=true" alt="Percent by Sector" width="500"/>
+
+**Interpretation:**  
+Agency size appears to be a meaningful predictor of buyer presence since smaller agencies are likelier to include roles that engage in data purchasing. Vendors may benefit from tailoring outreach strategies based on the structural and operational dynamics of minor versus large agencies. This may reflect different procurement structures, leaner staffing models, or greater operational flexibility compared to larger agencies. 
+
+
+### 3. Agency Size Effect
 
 Smaller and mid-sized agencies are more likely to embed data responsibilities in **generalist or administrative titles**, rather than posting explicitly labeled analyst roles. Examples include:
 
@@ -521,7 +538,7 @@ These agencies should not be overlooked simply because of lower job counts — t
 
 ---
 
-#### Sector-Level Trends by Buyer Concentration
+#### 4. Sector-Level Trends by Buyer Concentration
 
 While **Health and Finance** sectors had the **highest volume** of data buyer roles overall, **Communications and Policy** showed the **highest proportion** of buyer roles relative to total hiring.
 
