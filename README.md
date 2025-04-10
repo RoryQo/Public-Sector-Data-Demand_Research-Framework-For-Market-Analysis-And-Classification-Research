@@ -459,14 +459,15 @@ Several statistically observable patterns emerged in the structured and text-bas
 
 ### 1. Seniority Doesn’t Always Matter
 
-Jobs flagged as `IsSeniorRole = 1` were not significantly more likely to be data buyers in the aggregate (*Welch’s t-test, p = 0.33*). This challenges the assumption that data purchasing is mostly confined to senior leadership or executive-level roles.
+Across all postings, jobs flagged as `IsSeniorRole = 1` were **not significantly more likely** to be associated with data purchasing (Welch’s t-test, *p* = 0.33). This challenges the assumption that data buying is primarily driven by executive or senior leadership roles.
 
-However, a contextual pattern was observed:
-- In **smaller agencies**, seniority becomes a **mild predictor** of data buying behavior.
-- This likely reflects generalist environments where senior program managers oversee multiple responsibilities — including analytics, procurement, and vendor coordination.
+That said, **agency size introduces meaningful context**:
 
-**Implication**: Seniority alone isn’t a strong signal of buyer behavior, but in under-resourced agencies, senior generalists often assume buyer-like roles.
+- In **small agencies**, senior roles were *slightly less likely* than non-senior roles to be data buyers.
+- In **large agencies**, the opposite pattern emerged — senior roles were *somewhat more likely* to be buyers.
+- Neither result was statistically significant, but the reversal in trend hints at structural differences.
 
+**Interpretation**: Seniority alone isn’t a strong predictor of buyer behavior. But in **larger, more hierarchical agencies**, senior staff may be more involved in procurement decisions. In **smaller agencies**, the distinction between senior and non-senior roles may blur, with non-senior staff taking on broader responsibilities, including vendor coordination.
 ---
 
 ### 2. Agency Size Effect
