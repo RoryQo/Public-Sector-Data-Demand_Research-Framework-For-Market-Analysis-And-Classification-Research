@@ -131,8 +131,8 @@ To explore how job postings aligned with specific public sector data use cases, 
 
 Natural Language Processing (NLP) enables pattern recognition at scale by understanding **how language is used**, not just what exact words are present. Public sector job titles and descriptions are highly inconsistent — NLP allows us to:
 
-- Classify ambiguous roles (e.g., “Program Analyst”) that describe analytics or vendor management
 - Generalize from confirmed buyers to latent ones using learned patterns
+- Prioritize outreach by assigning a **likelihood score** to each role, indicating its probability of representing a data buyer.
 - Scale scoring across future datasets or job boards with minimal manual tagging
 
 By training on real data buyers, the model reflects actual hiring language and captures demand that keyword-only methods miss.
