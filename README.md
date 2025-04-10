@@ -7,7 +7,7 @@ This project analyzes thousands of U.S. federal government job postings scraped 
 
 To uncover these latent buyer roles, we trained a logistic regression classification model using TF-IDF features derived from job titles, descriptions, and key duties, alongside structured metadata like agency size, industry classification, and role seniority. Training data was built from a curated set of known buyers identified through keyword and fuzzy matching logic. The model was then applied across the full dataset to assign each job a probability score—used to assess buying likelihood and analyze broader trends.
 
-The project goes beyond role-level classification to map how data use cases such as fraud detection, sentiment analysis, patient matching, and ad targeting show up across agencies and sectors. Through visualization and scoring, it highlights which parts of government are functionally reliant on third-party data, even when job titles and duties don’t explicitly say so.
+In parallel, the project includes a **market analysis component** that investigates broader patterns in public sector data demand. This includes mapping strategic use cases — such as fraud detection, sentiment analysis, patient matching, and ad targeting — to specific agencies and roles. It also explores how data buyer behavior varies by **agency size**, **role seniority**, **Industry**, and the presence of **generalist versus specialist job functions**.
 
 This work provides value to vendors seeking to identify government demand for external data, researchers studying digital public infrastructure, and policymakers interested in how data-driven functions are operationalized in the federal workforce.
 
@@ -28,6 +28,8 @@ This work provides value to vendors seeking to identify government demand for ex
 This project analyzes public sector job postings to identify roles that are either explicitly or implicitly involved in third-party data acquisition — referred to throughout this report as “data buyers.” Using a blend of traditional keyword detection, fuzzy matching, rule-based tagging, and predictive modeling via natural language processing (NLP), this approach surfaces both overt and hidden demand for external data tools and services.
 
 The goal is to provide commercial data vendors with a replicable, high-precision strategy for identifying public sector buyers aligned to specific strategic use cases: fraud detection, sentiment analysis, patient record matching, and ad targeting.
+
+Beyond individual lead identification, the project also surfaces **market-level trends** that shape how data purchasing decisions are made. These include patterns in **agency size**, **role seniority**, **Industry**, and whether buyers tend to hold **generalist or specialist titles**. Understanding these structural dynamics enables vendors to tailor their outreach, prioritize agencies more likely to buy, and better anticipate where buyer authority is embedded within government organizations.
 
 ---
 
