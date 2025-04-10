@@ -429,33 +429,25 @@ These roles frequently involve vendor management, platform evaluation, fraud ana
 
 Text patterns extracted from the NLP model reveal what kinds of language most commonly appear in likely data buyer postings — and what kinds of phrases typically indicate non-buyers.
 
-#### Top Predictive Tokens:
 
-| Token             | Model Weight |
-|------------------|--------------|
-| acquisition       | 1.40         |
-| purchase          | 1.32         |
-| hiring managers   | 1.29         |
-| external partners | 1.21         |
-| budget planning   | 1.15         |
-| vendors           | 1.09         |
-| contracts         | 1.03         |
-| procurement       | 0.98         |
-| interoperability  | 0.92         |
-| commercial data   | 0.90         |
-| licensing         | 0.88         |
-| data integration  | 0.85         |
-| vendor platform   | 0.82         |
-| market intelligence | 0.79       |
-| external data     | 0.77         |
+#### Filtering Strategy: Precision Targeting  (Top Token Predictors)
 
+**Positive signals to track:**
+- “data subscription”
+- “vendor-supplied”
+- “analytics vendor”
+- “platform integration”
+- “audience segmentation”
+- “procured dataset”
 
-#### Negative Signals:
-- “patient bathing”
-- “meal preparation”
-- “linen services”
-- “custodial duties”
-- “vehicle operation”
+**Negative signals to filter:**
+- “meal prep”
+- “linen delivery”
+- “patient hygiene”
+- “custodial support”
+- “motor vehicle operation”
+- Titles with “Technician” or “Assistant” in non-technical settings
+
 
 These were common in support or clinical jobs that mention records or systems, but not in the context of analytics or procurement. These jobs were originally responsible for many false positives and were filtered out manually.
 
@@ -544,25 +536,7 @@ This suggests:
   <img src="https://github.com/RoryQo/MQE-BSD-Capstone-Project/blob/main/Rory%20Files/Figures/sectornum.png?raw=true" alt="Count by Sector" width="500"/>
 </p>
 
----
 
-### Filtering Strategy: Precision Targeting
-
-**Positive signals to track:**
-- “data subscription”
-- “vendor-supplied”
-- “analytics vendor”
-- “platform integration”
-- “audience segmentation”
-- “procured dataset”
-
-**Negative signals to filter:**
-- “meal prep”
-- “linen delivery”
-- “patient hygiene”
-- “custodial support”
-- “motor vehicle operation”
-- Titles with “Technician” or “Assistant” in non-technical settings
 
 ---
 
@@ -594,5 +568,7 @@ This suggests:
 Data buyers in government are not always called “data analysts.” They are Program Managers, Contract Officers, and Health IT Leads managing real-world platforms and workflows that depend on third-party data. 
 
 This analysis combines keyword matching, machine learning, and contextual classification to help vendors find these roles — and act on them. With an adaptable pipeline and strong textual patterns, this framework is not only accurate today, but built to evolve with the market.
+
+
 
 
