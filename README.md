@@ -1,7 +1,58 @@
+<h1 align="center"> Targeting Data Buyers in the Public Sector:<br> A Predictive Modeling and Market Strategy Guide</h1>
+
+
+
+<table align="center">
+  <tr>
+    <td colspan="2" align="center" style="background-color: white; color: black;"><strong>Table of Contents</strong></td>
+  </tr>
+
+  <tr>
+    <td style="background-color: white; color: black; padding: 10px;">
+      1. <a href="#overview" style="color: black;">Overview</a><br>
+    </td>
+    <td style="background-color: gray; color: black; padding: 10px;">
+      2. <a href="#methodology" style="color: black;">Methodology</a><br>
+      &nbsp;&nbsp;&nbsp;- <a href="#data-and-scope" style="color: black;">Data and Scope</a><br>
+      &nbsp;&nbsp;&nbsp;- <a href="#text-normalization-and-feature-engineering" style="color: black;">Text Normalization & Feature Engineering</a><br>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="background-color: gray; color: black; padding: 10px;">
+      3. <a href="#natural-language-processing-model" style="color: black;">NLP Model</a><br>
+      &nbsp;&nbsp;&nbsp;- <a href="#feature-inputs" style="color: black;">Model Specifications</a><br>
+      &nbsp;&nbsp;&nbsp;- <a href="#interpretation-of-databuyerscore-distribution" style="color: black;">Score Distribution</a><br>
+      &nbsp;&nbsp;&nbsp;- <a href="#model-performance-and-fit" style="color: black;">Model Performance and Fit</a><br>
+      &nbsp;&nbsp;&nbsp;- <a href="#model-deployment-and-flexibility" style="color: black;">Model Deployment and Flexibility</a><br>
+      &nbsp;&nbsp;&nbsp;- <a href="#limitations" style="color: black;">Limitations</a>
+    </td>
+    <td style="background-color: white; color: black; padding: 10px;">
+      4. <a href="#market-analysis-public-sector-demand-for-third-party-data" style="color: black;">Market Analysis</a><br>
+      &nbsp;&nbsp;&nbsp;- <a href="#use-case-alignment-by-agency" style="color: black;">Use Case Alignment</a><br>
+      &nbsp;&nbsp;&nbsp;- <a href="#sector-trends" style="color: black;">Sector Trends</a><br>
+      &nbsp;&nbsp;&nbsp;- <a href="#key-roles-and-latent-buyers" style="color: black;">Key Roles & Latent Buyers</a><br>
+      &nbsp;&nbsp;&nbsp;- <a href="#token-insights-and-role-patterns" style="color: black;">Token Insights</a><br>
+      &nbsp;&nbsp;&nbsp;- <a href="#statistical-patterns-in-data-buyer-classification" style="color: black;">Statistical Patterns</a>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="background-color: gray; color: black; padding: 10px;">
+      5. <a href="#strategic-recommendations" style="color: black;">Strategic Recommendations</a>
+    </td>
+    <td style="background-color: white; color: black; padding: 10px;">
+      6. <a href="#conclusion" style="color: black;">Conclusion</a>
+    </td>
+  </tr>
+</table>
+
+
+
+
+
 
 # Overview
-
-## Identifying Data Buyer Roles in Government Job Postings
 
 This project analyzes thousands of U.S. federal government job postings scraped from the USAJOBS public API to identify roles that are likely engaged in purchasing or using third-party data. Many such roles are not explicitly labeled as “data buyer” positions, but contain textual and structural signals indicating involvement with vendor platforms, data subscriptions, analytics integration, or fraud detection tools.
 
@@ -20,10 +71,8 @@ This work provides value to vendors seeking to identify government demand for ex
   
 
 
-# Methodology and Market Analysis
 
-
-## Methodology
+# Methodology
 
 This project analyzes public sector job postings to identify roles that are either explicitly or implicitly involved in third-party data acquisition — referred to throughout this report as “data buyers.” Using a blend of traditional keyword detection, fuzzy matching, rule-based tagging, and predictive modeling via natural language processing (NLP), this approach surfaces both overt and hidden demand for external data tools and services.
 
@@ -101,7 +150,7 @@ Each job was tagged to one or more of the following industries:
 | Policy          | “policy,” “regulation,” “legislative,” “analyst,” “compliance”         |
 | Other           | Default category for postings that do not match the above keywords     |
 
-### Use Case
+### Use Case Classification
 
 **Use case indicators** based on keyword detection in the `CombinedText` field (which merges job title, description, and duties). 
 
@@ -127,7 +176,7 @@ To explore how job postings aligned with specific public sector data use cases, 
 
 ---
 
-### Natural Language Processing (NLP) Model
+# Natural Language Processing Model
 
 ### Why NLP Is Effective for This Project
 
@@ -368,7 +417,7 @@ The entire classification and scoring pipeline has been designed for **scalabili
 
 ---
 
-## Market Analysis: Public Sector Demand for Third-Party Data
+# Market Analysis: Public Sector Demand for Third-Party Data
 
 ### Overview
 
