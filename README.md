@@ -235,12 +235,17 @@ To identify common language patterns associated with data-buying behavior:
    - `IsSeniorRole` (derived by keyword matching in job titles, binary)
 
 #### Class Balancing
-- SMOTE (Synthetic Minority Oversampling Technique) was used to balance the training set for fair learning between buyers and non-buyers.
+
+To address class imbalance between confirmed data buyers and non-buyers, we applied SMOTE (Synthetic Minority Oversampling Technique) during training. Rather than duplicating minority examples, SMOTE generates synthetic samples by interpolating between existing observations. This creates a more diverse and representative set of buyer-like roles.
+
+Class balancing is essential for fair learning. Without it, the model would be biased toward the majority class (non-buyers), suppressing its ability to detect latent buyers. SMOTE ensures that the model learns equally from both classes, improving generalization and recall for identifying underrepresented buyer roles.
+
 
 #### Outputs:
 - `PredictedLabel`: A binary classification (0 or 1) indicating likely buyer status.
 - `DataBuyerScore`: The predicted probability (∈ [0,1]) assigned by the model.
 - `Token Coefficients`: Feature weights extracted from the trained model to identify high-impact terms.
+
 
 This model allowed us to surface **latent data buyers** — jobs that don't use explicit terms but share linguistic patterns with confirmed buyers.
 
