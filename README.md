@@ -48,7 +48,7 @@
   <tr>
     <td colspan="2" style="background-color: white; color: black; padding: 10px;">
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <a href="#automation-and-reproducibility" style="color: black;">7. Fully Automated Data Buyer Lead Generation</a>
+      <a href="#appendix-automation-and-reproducibility" style="color: black;">7. Fully Automated Data Buyer Lead Generation</a>
     </td>
   </tr>
 </table>
@@ -655,7 +655,7 @@ This analysis combines keyword matching, machine learning, and contextual classi
 
 ---
 
-## Automation and Reproducibility
+## Appendix: Automation and Reproducibility
 
 This project is fully automated from **data acquisition to model deployment**, using two modular notebooks:
 
