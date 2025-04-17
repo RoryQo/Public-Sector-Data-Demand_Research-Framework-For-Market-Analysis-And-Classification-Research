@@ -693,6 +693,64 @@ All model and feature pipelines are stored in `.pkl` files (included in this rep
 - Plug-and-play reruns on new job data
 - Scalable deployment on different job boards
 - Consistent inference without retraining
+- 
+
+---
+
+### Future Work: Automated Contact Scraper for Data Buyer Leads
+
+This project can be extended into a **full data buyer discovery engine** by adding a contact scraping module that connects model-identified roles to real professionals on LinkedIn.
+
+#### Proposed Extension Pipeline:
+
+##### 1. **Ingest Pre-Filtered Buyer Leads**
+   - Use the output DataFrame from `Automated Modeling and Lead Generating.ipynb`
+   - Extract unique combinations of:
+     - `JobTitle`
+     - `AgencyName`
+
+##### 2. **Automated LinkedIn Search**
+   - For each prospect, create a search string from the `JobTitle` and `AgencyName`, e.g.:
+     ```
+     "Senior Data Analyst" AND "Department of Education" site:linkedin.com/in
+     ```
+   - Create code to automatically perform a search for each prospect using this string
+   - Use **Selenium** or **Playwright** to:
+     - Simulate searching
+     - Scroll results
+     - Scrape preview data (title, company, link)
+
+##### 3. **Scrape Public Contact Information**
+   - For each matching LinkedIn profile, extract:
+     - Full name
+     - Current job title
+     - Agency/employer
+     - Location
+     - LinkedIn URL
+     - (Optional) Public email or shared connections
+
+##### 4. **Build Contact-Level Lead File**
+   - Merge scraped contact data with:
+     - `DataBuyerScore`
+     - `JobTitle`
+     - `AgencyName`
+   - Output a ranked contact DataFrame:
+
+     | Name         | Title             | Agency               | LinkedIn URL             | Score | Location     |
+     |--------------|-------------------|------------------------|---------------------------|--------|--------------|
+     | Alex Chen    | Risk Analyst Lead | Dept. of Transportation | linkedin.com/in/alexchen | 0.88   | Boston, MA   |
+
+##### 5. **Export for Outreach**
+   - Automatically save as `data_buyer_contacts.csv`
+   - Optionally push to Google Sheets or a CRM tool
+
+> **Note:** Always follow LinkedIn’s Terms of Service. For compliant and scalable enrichment, consider APIs such as Clearbit, Apollo, or PeopleDataLabs.
+
+
+
+
+
+
 
 
 > **Note:** Make sure to download the accompanying pipeline files (`.pkl`), which are required for loading the model and running predictions in `Automated Modeling and Lead Generating.ipynb`.
