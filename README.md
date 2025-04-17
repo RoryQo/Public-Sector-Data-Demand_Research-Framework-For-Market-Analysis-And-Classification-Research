@@ -1,7 +1,5 @@
 <h1 align="center"> Targeting Data Buyers in the Public Sector:<br> A Predictive Modeling and Market Strategy Guide</h1>
 
-
-
 <table align="center">
   <tr>
     <td colspan="2" align="center" style="background-color: white; color: black;"><strong>Table of Contents</strong></td>
@@ -45,7 +43,18 @@
       6. <a href="#conclusion" style="color: black;">Conclusion</a>
     </td>
   </tr>
+
+  <!-- Faked-centered row -->
+  <tr>
+    <td colspan="2" style="background-color: white; color: black; padding: 10px;">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="#automation-and-reproducibility" style="color: black;">7. Fully Automated Data Buyer Lead Generation</a>
+    </td>
+  </tr>
 </table>
+
+
+
 
 
 
@@ -644,5 +653,43 @@ Data buyers in government are not always called “data analysts.” They are Pr
 This analysis combines keyword matching, machine learning, and contextual classification to help vendors find these roles — and act on them. With an adaptable pipeline and strong textual patterns, this framework is not only accurate today, but built to evolve with the market.
 
 
+---
+
+## Automation and Reproducibility
+
+This project is fully automated from **data acquisition to model deployment**, using two modular notebooks:
+
+### 1. API Call and Full Automatic Data Generation Label Creation.ipynb
+- Connects to the official **USAJobs API** and pulls federal job postings based on configurable search criteria
+- Cleans and parses returned data, standardizes fields, and formats for modeling
+- Automatically applies a hybrid **labeling strategy**:
+  - Keyword detection (e.g., “data subscription,” “vendor-supplied”)
+  - Fuzzy phrase matching
+  - Role-based flags (`IsSeniorRole`, `IsExplicitDataJob`, etc.)
+- Outputs a labeled dataset with buyer and non-buyer tags — ready for training or prediction
+
+**All keyword lists are fully editable**, allowing you to adapt tagging logic to reflect new tools, vendors, and terminology as the public sector data market evolves
+
+### 2. Automated Modeling and Lead Generating.ipynb
+- Loads labeled job data and feeds it into a **prebuilt NLP modeling pipeline**
+- Applies preprocessing:
+  - TF-IDF text vectorization
+  - One-hot encoding of structured fields
+  - SMOTE-based class balancing
+- Generates predictions using a trained **NLP logistic regression model**
+- Outputs:
+  - `PredictedLabel` (0/1)
+  - `DataBuyerScore` (likelihood ∈ [0,1])
+- Automatically **exports a ranked lead list** of high-priority public sector buyer roles
+
+###  Reusability
+All model and feature pipelines are stored in `.pkl` files (included in this repo). This allows:
+- Plug-and-play reruns on new job data
+- Scalable deployment on different job boards
+- Consistent inference without retraining
+
+
+> **Note:** Make sure to download the accompanying pipeline files (`.pkl`), which are required for loading the model and running predictions in `Automated Modeling and Lead Generating.ipynb`.
+>  Simply update the file paths and USAJobs API key in the acquisition notebook, and the entire process will run start-to-finish — from pulling raw job data to generating export-ready lead lists.
 
 
