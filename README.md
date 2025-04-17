@@ -513,8 +513,14 @@ Text patterns extracted from the NLP model reveal what kinds of language most co
 - “motor vehicle operation”
 - Titles with “Technician” or “Assistant” in non-technical settings
 
+#### Importance of N-grams for Context Understanding
+These patterns underscore how critical **n-grams** are for understanding context in natural language. For example, the word **“operation”** on its own might suggest data operations or business functions related to analytics. However, when preceded by terms like **“motor vehicle”**, the context clearly shifts away from data buying.
 
-These were common in support or clinical jobs that mention records or systems, but not in the context of analytics or procurement. These jobs were originally responsible for many false positives and were filtered out manually.
+Allowing the model to interpret **multi-word phrases** instead of just individual tokens enables it to:
+
+- Distinguish between similar words used in **very different contexts**
+- Reduce misclassification by learning from **preceding and surrounding words**
+- Increase precision by correctly ignoring irrelevant but superficially similar terms
 
 ---
 
