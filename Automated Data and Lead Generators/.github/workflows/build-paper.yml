@@ -1,0 +1,27 @@
+name: Build JOSS Paper
+
+on:
+  push:
+    paths:
+      - Automated Data and Lead Generators/paper.md
+      - Automated Data and Lead Generators/paper.bib
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build paper
+        uses: openjournals/openjournals-action@v1
+        with:
+          journal: joss
+          paper-path: "Automated Data and Lead Generators/paper.md"
+
+      - name: Upload compiled PDF
+        uses: actions/upload-artifact@v3
+        with:
+          name: paper
+          path: "Automated Data and Lead Generators/paper.pdf"
