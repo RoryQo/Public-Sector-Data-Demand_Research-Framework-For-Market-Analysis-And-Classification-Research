@@ -1,4 +1,4 @@
-title: 'A Lead Generation Tool for Third-Party Data Demand in U.S. Public Job Postings"'
+title: 'A Lead Generation Tool for Third-Party Data Demand in U.S. Public Job Postings'
 tags:
   - Python
   - Demand Modeling
@@ -15,7 +15,7 @@ affiliations:
    index: 1
    ror: 00hx57361
 
-date: 13 August 2017
+date: 03 May 2025
 
 
 
