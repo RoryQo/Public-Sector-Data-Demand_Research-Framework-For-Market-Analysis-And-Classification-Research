@@ -5,7 +5,6 @@ on:
     paths:
       - Automated Data and Lead Generators/paper.md
       - Automated Data and Lead Generators/paper.bib
-
   workflow_dispatch:
 
 jobs:
@@ -15,14 +14,13 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Build paper
-        uses: openjournals/openjournals-action@v1
+        uses: openjournals/inara@v1
         with:
           journal: joss
           paper-path: "Automated Data and Lead Generators/paper.md"
 
       - name: Upload compiled PDF
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: paper
           path: "Automated Data and Lead Generators/paper.pdf"
-
