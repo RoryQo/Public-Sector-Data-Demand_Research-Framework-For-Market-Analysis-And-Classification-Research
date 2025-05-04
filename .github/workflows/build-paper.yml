@@ -1,26 +1,25 @@
-name: Build JOSS Paper
+name: Draft PDF
 
 on:
   push:
     paths:
-      - Automated Data and Lead Generators/paper.md
-      - Automated Data and Lead Generators/paper.bib
-  workflow_dispatch:
+      - 'Automated Data and Lead Generators/paper.md'
+      - '.github/workflows/draft-pdf.yml'
 
 jobs:
-  build:
+  paper:
     runs-on: ubuntu-latest
+    name: Paper Draft
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Build paper
-        uses: openjournals/inara@v1
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build draft PDF
+        uses: openjournals/openjournals-draft-action@master
         with:
           journal: joss
-          paper-path: "Automated Data and Lead Generators/paper.md"
-
-      - name: Upload compiled PDF
+          paper-path: 'Automated Data and Lead Generators/paper.md'
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
           name: paper
-          path: "Automated Data and Lead Generators/paper.pdf"
+          path: 'Automated Data and Lead Generators/paper.pdf'
