@@ -37,5 +37,5 @@ performing numerical orbit integration).
 
 The demand for external data in businesses has grown exponentially across industries. While we know this demand exists, public procurement records are often unavailable or do not identify the roles or departments responsible for purchasing. This lack of transparency leads to market inefficiencies where data vendors cannot reliably connect with or identify their clients. 
 
-This project addresses that inefficiency by creating a reproducible framework to estimate this demand through job descriptions in available position postings and outputs a ranked list of job titles and agencies by their likelihood of being data buyers- enabling researchers and data vendors to identify likely clients and then prioritize their outreach based on their scores.
+This project addresses that inefficiency by creating a reproducible framework to estimate this demand through job descriptions in available position postings and outputs a ranked list of job titles and agencies by their likelihood of being data buyers- enabling researchers and data vendors to identify likely clients and then prioritize their outreach based on these scores.
 
