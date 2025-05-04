@@ -50,3 +50,21 @@ All model and feature pipelines are stored in `.pkl` files (included in this rep
 - Plug-and-play reruns on new job data
 - Scalable deployment on different job boards
 - Consistent inference without retraining
+
+## Dependencies
+
+This project requires the following Python packages:
+
+- `pandas` – for data manipulation  
+- `numpy` – for numerical operations  
+- `scikit-learn` – for TF-IDF vectorization, SMOTE, and logistic regression modeling  
+- `nltk` – for text preprocessing (tokenization, stop word removal)  
+- `requests` – for accessing the USAJOBS API  
+- `json` – for parsing API responses  
+- `matplotlib` – for plotting score distributions and outputs  
+- `tqdm` – for progress tracking during data collection  
+- `fuzzywuzzy` or `rapidfuzz` – for fuzzy string matching in weak supervision
+
+All dependencies are listed in `requirements.txt`.
+
+> **Note**: You may need to run `nltk.download('stopwords')` and `nltk.download('punkt')` the first time you use the text preprocessing functions.
