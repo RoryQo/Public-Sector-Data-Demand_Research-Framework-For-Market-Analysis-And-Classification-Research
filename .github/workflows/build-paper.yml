@@ -26,4 +26,3 @@ jobs:
           name: paper
           path: "Automated Data and Lead Generators/paper.pdf"
 
-Add GitHub Action to auto-compile paper.md
