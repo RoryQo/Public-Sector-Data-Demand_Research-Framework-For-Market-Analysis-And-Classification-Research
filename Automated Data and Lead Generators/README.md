@@ -68,3 +68,25 @@ This project requires the following Python packages:
 All dependencies are listed in `requirements.txt`.
 
 > **Note**: You may need to run `nltk.download('stopwords')` and `nltk.download('punkt')` the first time you use the text preprocessing functions.
+
+
+## 🔒 License
+
+This project is licensed under the **MIT License**, an OSI-approved permissive license that allows reuse, modification, and distribution with proper attribution.
+
+See the [LICENSE](./LICENSE) file for full terms.
+
+
+## Future Contributions
+
+Contributions are welcome and encouraged as the public-sector data landscape evolves!
+
+### How to Contribute
+1. Fork this repository
+2. Create a new branch: `git checkout -b feature/my-feature`
+3. Make your changes and commit them
+4. Push to your fork: `git push origin feature/my-feature`
+5. Open a pull request describing your proposed change
+
+For major changes, please open an issue first to discuss scope and direction.
+
