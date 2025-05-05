@@ -4,6 +4,11 @@
   <h2 align="center"; style="margin: 0; color: #333; font-weight: bold;">🚧 Under Consideration for Publication</h2>
   <p  align="center"; style="margin: 5px 0 0; font-size: 14px; color: #555;">This project is currently a submission to an academic journal</p>
 
+<p align="center">
+  <a href="https://doi.org/10.5281/zenodo.YOUR-ID-HERE">
+    <img src="https://zenodo.org/badge/DOI/10.5281/zenodo.Processing.svg" alt="DOI">
+  </a>
+</p>
 
 
 <table align="center">
