@@ -1,5 +1,3 @@
-\documentclass{joss}
-
 title: 'A Lead Generation Tool for Third-Party Data Demand in U.S. Public Job Postings'
 tags:
   - Python 
