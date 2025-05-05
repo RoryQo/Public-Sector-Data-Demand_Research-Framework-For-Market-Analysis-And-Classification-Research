@@ -2,7 +2,7 @@
 
 <div style="text-align: center; padding: 15px 0; background-color: #f0f0f0; border-radius: 8px; margin-bottom: 20px;">
   <h2 style="margin: 0; color: #333; font-weight: bold;">🚧 Under Consideration for Publication</h2>
-  <p style="margin: 5px 0 0; font-size: 14px; color: #555;">This project is currently being prepared for submission to an academic journal</p>
+  <p style="margin: 5px 0 0; font-size: 14px; color: #555;">This project is currently a submission to an academic journal</p>
 </div>
 
 
