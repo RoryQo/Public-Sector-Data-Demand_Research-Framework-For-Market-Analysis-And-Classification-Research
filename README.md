@@ -89,11 +89,53 @@ This work provides value to vendors seeking to identify government demand for ex
 
 # Methodology
 
-This project analyzes public sector job postings to identify roles that are either explicitly or implicitly involved in third-party data acquisition — referred to throughout this report as “data buyers.” Using a blend of traditional keyword detection, fuzzy matching, rule-based tagging, and predictive modeling via natural language processing (NLP), this approach surfaces both overt and hidden demand for external data tools and services.
+### Overview and Flow
 
-The goal is to provide commercial data vendors with a replicable, high-precision strategy for identifying public sector buyers aligned to specific strategic use cases: fraud detection, sentiment analysis, patient record matching, and ad targeting.
+This project builds a fully automated pipeline to identify public sector roles likely involved in purchasing third-party data — referred to here as *data buyers*. The process integrates data acquisition, keyword-based labeling, and predictive modeling using natural language processing (NLP). The framework is designed to detect both explicit and latent demand for external data tools and services.
 
-Beyond individual lead identification, the project also surfaces **market-level trends** that shape how data purchasing decisions are made. These include patterns in **agency size**, **role seniority**, **Industry**, and whether buyers tend to hold **generalist or specialist titles**. Understanding these structural dynamics enables vendors to tailor their outreach, prioritize agencies more likely to buy, and better anticipate where buyer authority is embedded within government organizations.
+#### Step 1: Data Acquisition and Structuring
+
+Using the official USAJobs API, the pipeline scrapes thousands of U.S. federal government job postings. Each job record includes unstructured fields such as job titles, descriptions, and key duties, along with structured fields such as agency name, department, and posting location.
+
+In addition to raw fields, a series of structured **metadata features** are constructed, including:
+
+- **Role seniority** (e.g., flags for "chief", "director", "senior")
+- **Agency size** (small, medium, large)
+- **Industry classification** (e.g., health, finance, communications)
+- **Generalist vs. specialist** role indicators
+
+These derived features provide critical contextual signals for later modeling steps.
+
+#### Step 2: Identifying Explicit Data Buyers
+
+To establish a labeled training set, job descriptions are analyzed using:
+
+- **Keyword detection**, targeting phrases such as “third-party data,” “data acquisition,” or “data purchasing”
+- **Fuzzy matching**, to capture linguistic variations such as “external analytics provider”
+
+Jobs containing these signals are flagged as **explicit data buyers**, forming the positive class for model training. This set of confirmed buyers is treated as ground truth for building a classifier.
+
+#### Step 3: Training the Predictive Model
+
+The labeled dataset is used to train a **logistic regression classifier** that learns to identify data buyers based on:
+
+- **TF-IDF vectorized job text** (from job title, description, and duties)
+- **Structured metadata** (e.g., agency size, seniority, industry)
+
+To address class imbalance between buyers and non-buyers, **SMOTE** is applied to synthetically augment the minority class during training.
+
+The model learns language and structural patterns that distinguish confirmed buyers from other postings — enabling it to generalize beyond the explicit keyword logic.
+
+#### Step 4: Scoring and Lead Generation
+
+Once trained, the model is applied across the full dataset. Each job posting receives a **DataBuyerScore**, a probability estimate reflecting how likely the role is to involve purchasing third-party data.
+
+This scoring approach enables:
+
+- Discovery of **latent buyer roles** that lack explicit language but share characteristics with confirmed buyers
+- **Prioritization** of high-scoring leads for vendor targeting
+- Broad **market-level analysis** of public sector data demand by agency, role type, and use case
+
 
 ---
 
@@ -136,10 +178,10 @@ Initial classification used a **hybrid strategy**:
 
 1. **Keyword detection**: targeting phrases like:
    - “third-party data”
-   - “data vendor”
+   - “data licensing”
    - “data subscription”
    - “procured dataset”
-   - “market intelligence”
+    
 2. **Fuzzy matching**: to capture variants such as “third party provider” or “external analytics vendor.”
 
 
