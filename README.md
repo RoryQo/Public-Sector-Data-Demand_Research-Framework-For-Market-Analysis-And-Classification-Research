@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://doi.org/10.5281/zenodo.YOUR-ID-HERE">
-    <img src="https://zenodo.org/badge/DOI/10.5281/zenodo.Processing.svg" alt="DOI">
+    <img src="https://zenodo.org/badge/DOI/10.5281/zenodo.Place-Holder.svg" alt="DOI">
   </a>
 </p>
 
