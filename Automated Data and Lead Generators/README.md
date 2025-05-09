@@ -3,7 +3,7 @@
 This project provides a fully automated pipeline for identifying third-party data demand in U.S. federal job postings. Integrating data acquisition, weak and supervised labeling, structured feature engineering, and NLP modeling generates a ranked list of roles likely to purchase external data, helping vendors and researchers target relevant public sector opportunities.
 
 
-## Modular Notebooks (Optional for Customization)
+## Modular Notebooks (Optimal for Customization)
 
 The full pipeline is available in two modular components for deeper inspection or future adaptation.
 
