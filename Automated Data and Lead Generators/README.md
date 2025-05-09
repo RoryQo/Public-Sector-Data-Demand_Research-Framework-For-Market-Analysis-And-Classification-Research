@@ -3,40 +3,60 @@
 This project provides a fully automated pipeline for identifying third-party data demand in U.S. federal job postings. Integrating data acquisition, weak and supervised labeling, structured feature engineering, and NLP modeling generates a ranked list of roles likely to purchase external data, helping vendors and researchers target relevant public sector opportunities.
 
 
-## Modular Notebooks (Optimal for Customization)
+This project is fully automated from **data acquisition to model deployment**, using two modular notebooks:
+# Public Sector Data Buyer Detection: End-to-End Pipeline
 
-The full pipeline is available in two modular components for deeper inspection or future adaptation.
+## 1. API Call and Full Automatic Data Generation Label Creation.ipynb
+- Connects to the official **USAJobs API** and pulls federal job postings based on configurable search criteria
+- Cleans and parses returned data, standardizes fields, creates meta-data, and formats for modeling
 
-### 1. `API Call and Full Automatic Data Generation Label Creation.ipynb`
+**⚠️ Setup Instructions Before Running**
 
-Handles the data acquisition and labeling phase.
+**Update file paths:**
+Use Ctrl + F to find and replace all instances of
+C://Users//...// with your local directory path.
 
-**Functionality:**
-- Connects to the USAJobs API with configurable keyword search.
-- Parses and cleans job metadata and descriptions.
-- Applies labeling logic based on role attributes and keyword presence.
-- Outputs a structured, labeled dataset in CSV format.
+**Insert your API credentials:**
+Replace the placeholder Authorization-Key with your own key from developer.usajobs.gov.
+Ensure the email address used in the API header matches the one registered with your key.
+## Recommended Entry Point: Full Pipeline Notebook
 
-**Setup:**
-- Insert your API credentials (email and Authorization-Key).
-- Update the output path using the `DATA_PATH` variable.
-- Customize the keyword list to target specific domains (e.g., fraud, analytics, healthcare).
+It is fully automated and will automatically download the wrangled data to your designated file path.
+Output is saved in a structured format (CSV).
 
+**All keyword lists are fully editable**, allowing you to adapt tagging logic to reflect new tools, vendors, and terminology as the public sector data market evolves
+This unified notebook handles the complete process:
 
-### 2. `Automated Modeling and Lead Generating.ipynb`
+## 2. Automated Modeling and Lead Generating.ipynb
+- Loads labeled job data and feeds it into a **prebuilt NLP modeling pipeline**
+- Applies preprocessing:
+  - TF-IDF text vectorization
+  - One-hot encoding of structured fields
+  - SMOTE-based class balancing
+- Generates predictions using a trained **NLP logistic regression model**
+- Outputs:
+  - `PredictedLabel` (0/1)
+  - `DataBuyerScore` (likelihood ∈ [0,1])
+- Automatically **exports a ranked lead list** of high-priority public sector buyer roles
+1. Connects to the USAJobs API to fetch real-time job postings.
+2. Cleans, labels, and structures the data.
+3. Applies a pre-trained NLP model to score third-party data demand.
+4. Outputs a ranked list of predicted buyers to CSV.
 
-Handles the modeling and prediction phase.
+**⚠️ Setup Instructions Before Running**
 
-**Functionality:**
-- Loads the labeled dataset.
-- Applies TF-IDF text vectorization, one-hot encoding, and SMOTE class balancing.
-- Uses a trained logistic regression classifier to predict data-buying likelihood.
-- Outputs binary labels and continuous scores, and saves a filtered lead list.
+**Set File Paths**
+Replace all file paths in the notebook with your own local paths.
+Use Ctrl + F to search for and replace all instances of the default path (C://Users/.../) with your desired directory.
 
-**Setup:**
-- Ensure the input file matches the output from the labeling notebook.
-- Update paths using the `DATA_PATH` variable.
-- Verify all required `.joblib` pipeline components are present.
+**Data File Consistency**
+Ensure the input CSV file has the same name and format as the one created by the automated data acquisition script.
+
+>If you used the USAJobs fetcher provided in this repository, no changes are needed.
+
+**Pipeline Files**
+The notebook depends on pretrained pipeline files (.pkl files for vectorizers, transformers, and the classifier), which are included in this repository.
+Be sure they are downloaded and saved in the correct folder as referenced in the notebook.
 
 ##  Dependencies
 
