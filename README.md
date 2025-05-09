@@ -381,15 +381,20 @@ To assess generalization performance, we conducted a 5-fold cross-validation usi
   
 #### Log Loss
 
-- **Log Loss Score (Model):** `0.316`
+- **Log Loss Score (Model):** `0.321`
 
-Log loss evaluates how well the predicted probabilities align with actual class labels, penalizing incorrect predictions more harshly when they are overly confident. Our model’s log loss score of **0.316** represents a substantial improvement over the naïve baseline score of **0.690**, which reflects a model that always predicts the average class probability. This improvement confirms that our model generates **well-calibrated, informative probabilities**.
+### Log Loss Evaluation
 
-Importantly, this score aligns with our earlier observation that **most predicted probabilities fall between 0.1 and 0.6**, indicating the model is not overly confident in its predictions. This moderate range of scores suggests the model is capturing real-world ambiguity—providing nuanced, probabilistic estimates instead of binary, all-or-nothing outputs. That calibration helps lower log loss and supports more effective prioritization and ranking of potential leads.
+The **mean log loss across 5-fold cross-validation** was **0.321**, indicating that the model’s predicted probabilities are generally well-aligned with the true class labels. Log loss penalizes overconfident misclassifications more heavily, so this relatively low score suggests the model is producing **well-calibrated probability estimates** rather than overly binary or extreme outputs.
+
+This score compares favorably to a naïve baseline log loss of **0.690**, which corresponds to a model that always predicts the base rate of the positive class. The reduction confirms that the model learns meaningful distinctions between likely and unlikely data buyers.
+
+Additionally, the predicted probabilities tend to fall in a moderate range, most between **0.1 and 0.6**—which supports the interpretation that the model captures **real-world ambiguity** in role descriptions and agency needs. This probabilistic calibration enables more informed lead prioritization and ranking, especially in high-stakes or resource-constrained outreach contexts.
+
 
 #### Oversight and False Positives
 
-While the model performed well overall, a notable subset of **false positives** emerged — roles that should not have been labeled as likely data buyers, yet were mistakenly flagged either through keyword matches or overgeneralized text patterns. These included:
+While the model performed well overall, a notable subset of **false positives** emerged — roles that should not have been labeled as likely data buyers, but were mistakenly flagged either through keyword matches or overgeneralized text patterns. These included:
 
 - **Pharmacy Technician**
 - **Dental Assistant**
