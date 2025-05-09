@@ -1,30 +1,11 @@
 # Public Sector Data Buyer Detection: End-to-End Pipeline
 
-This project provides a fully automated pipeline for identifying third-party data demand in U.S. federal job postings. By integrating data acquisition, weak labeling, and NLP modeling, it generates a ranked list of roles likely to purchase external data, helping vendors and researchers target relevant public sector opportunities.
-
-
-
-## Recommended Entry Point: Full Pipeline Notebook
-
-### `Full Pipeline Combined.ipynb`
-
-This unified notebook handles the complete process:
-
-1. Connects to the USAJobs API to fetch real-time job postings.
-2. Cleans, labels, and structures the data.
-3. Applies a pre-trained NLP model to score third-party data demand.
-4. Outputs a ranked list of predicted buyers to CSV.
-
-**Before Running:**
-- Adjust the `DATA_PATH` variable to set your preferred working directory.
-- Insert your USAJobs API credentials in the request headers.
-- Ensure pretrained `.joblib` files (model, vectorizer, pipeline) are available in the working folder.
-
+This project provides a fully automated pipeline for identifying third-party data demand in U.S. federal job postings. Integrating data acquisition, weak and supervised labeling, structured feature engineering, and NLP modeling generates a ranked list of roles likely to purchase external data, helping vendors and researchers target relevant public sector opportunities.
 
 
 ## Modular Notebooks (Optional for Customization)
 
-The full pipeline is also available in two modular components for deeper inspection or future adaptation.
+The full pipeline is available in two modular components for deeper inspection or future adaptation.
 
 ### 1. `API Call and Full Automatic Data Generation Label Creation.ipynb`
 
