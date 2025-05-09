@@ -356,25 +356,29 @@ The distribution of `DataBuyerScore` reveals important patterns about the model'
 
 ### Performance
 
-| Metric         | Class 0 (Not a Buyer) | Class 1 (Likely Buyer) | Macro Avg | Weighted Avg |
-|----------------|------------------------|--------------------------|-----------|---------------|
-| Precision      | 97.99%                 | 61.42%                   | 79.71%    | 92.27%        |
-| Recall         | 89.48%                 | 90.14%                   | 89.81%    | 89.59%        |
-| F1 Score       | 93.55%                 | 73.06%                   | 83.30%    | 90.34%        |
-| Accuracy       |                        |                          |           | **89.59%**    |
+#### Cross-Validation Evaluation
 
+To assess generalization performance, we conducted a 5-fold cross-validation using the full dataset. Each fold preserved class imbalance to reflect real-world data distribution. The results below report the mean and standard deviation across folds.
 
-<img src="https://github.com/RoryQo/MQE-BSD-Capstone-Project/blob/main/Rory%20Files/Figures/CF.png?raw=true" alt="Confusion Matrix" width="400"/>
+<div align="center">
+
+|          | Accuracy | Precision | Recall | F1 Score | ROC AUC |
+|----------|:--------:|:---------:|:------:|:--------:|:-------:|
+| **Mean** |  0.8672  |  0.8810   | 0.1763 |  0.2927  | 0.8575  |
+| **Std**  |  0.0045  |  0.0544   | 0.0325 |  0.0478  | 0.0101  |
+
+</div>
 
 
 #### Interpretation
 
-- The model achieves strong **overall accuracy** (89.6%) across thousands of public sector job listings.
-- It is **highly sensitive to actual data buyer roles**, with a 90.1% recall — ensuring very few buyers are missed.
-- **Precision is moderate** (61.4%), which makes this model well-suited for **broad lead discovery** and outreach where recall matters more than strict precision.
-- The inclusion of `Industry`, `AgencySize`, and `IsSeniorRole` as structured features adds **contextual richness**, helping the model distinguish buyers embedded in generalist, administrative, or hybrid roles.
-- By focusing on **real job text** (title, description, and duties) and excluding engineered search terms (search keywords), the model maintains **generalizability and interpretability** across agencies and departments.
+- The model demonstrates **strong and stable performance**, with low standard deviations across all metrics. This suggests consistent behavior across different data folds and supports model reliability.
+- A high **ROC AUC (0.86)** indicates strong discriminatory power, even in the presence of class imbalance.
+- **Precision for the positive class (88.1%)** is particularly valuable for commercial data vendors: when outreach is costly per lead (e.g., personalized demos, sales follow-up), a high precision rate ensures resources are focused on highly likely buyers.
+- Although **recall is modest (17.6%)**, the model consistently captures a meaningful subset of true data buyers — particularly those less discoverable via keyword matching alone.
+- The use of structured fields such as `Industry`, `AgencySize`, and `IsSeniorRole` enhances the model’s ability to identify buyers embedded in generalist or hybrid job roles, supporting its interpretability and generalizability across agency contexts.
 
+  
 #### Log Loss
 
 - **Log Loss Score (Model):** `0.316`
@@ -382,17 +386,6 @@ The distribution of `DataBuyerScore` reveals important patterns about the model'
 Log loss evaluates how well the predicted probabilities align with actual class labels, penalizing incorrect predictions more harshly when they are overly confident. Our model’s log loss score of **0.316** represents a substantial improvement over the naïve baseline score of **0.690**, which reflects a model that always predicts the average class probability. This improvement confirms that our model generates **well-calibrated, informative probabilities**.
 
 Importantly, this score aligns with our earlier observation that **most predicted probabilities fall between 0.1 and 0.6**, indicating the model is not overly confident in its predictions. This moderate range of scores suggests the model is capturing real-world ambiguity—providing nuanced, probabilistic estimates instead of binary, all-or-nothing outputs. That calibration helps lower log loss and supports more effective prioritization and ranking of potential leads.
-
-
-#### Threshold Optimization on Performance
-
-To further improve performance, we applied **threshold optimization** by selecting the probability cutoff that maximized the **F1 score**. This process identified an **optimal threshold of 0.57**, which provided a better balance between precision and recall compared to the default threshold of 0.5.
-
-Overall metrics such as **F1 score** and **accuracy** improved at this threshold. However, we also observed that the model missed some true data buyers. Since the primary goal of this model is the **initial identification of potential public sector data buyers**, we consider **recall more critical than precision**.
-
-In other words, it’s preferable to **over-predict** (accept more false positives) than to **under-predict** and miss genuine prospects. As a result, while the threshold of 0.57 is useful for improving general performance, we continue to evaluate thresholds that prioritize **high recall**, even at the expense of precision.
-
-That said, when we optimized directly for recall — for example, targeting a **90% recall rate** — the resulting threshold was **too low**, leading to the generation of **many unqualified or unuseful leads**. In this context, the original **default threshold of 0.5** strikes a practical balance: it **successfully identifies most true data buyers**, while avoiding the overgeneration of low-value predictions. This balance supports a more effective and efficient lead identification strategy in real-world use.
 
 #### Oversight and False Positives
 
