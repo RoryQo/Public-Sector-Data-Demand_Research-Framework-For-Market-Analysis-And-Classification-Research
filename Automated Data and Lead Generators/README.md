@@ -17,12 +17,10 @@ Use Ctrl + F to find and replace all instances of
 C://Users//...// with your local directory path.
 
 **Insert your API credentials:**
-Replace the placeholder Authorization-Key with your own key from developer.usajobs.gov.
-Ensure the email address used in the API header matches the one registered with your key.
-## Recommended Entry Point: Full Pipeline Notebook
 
-It is fully automated and will automatically download the wrangled data to your designated file path.
-Output is saved in a structured format (CSV).
+Replace the placeholder Authorization-Key with your own key from developer.usajobs.gov.
+
+Ensure the email address used in the API header matches the one registered with your key.
 
 **All keyword lists are fully editable**, allowing you to adapt tagging logic to reflect new tools, vendors, and terminology as the public sector data market evolves
 This unified notebook handles the complete process:
