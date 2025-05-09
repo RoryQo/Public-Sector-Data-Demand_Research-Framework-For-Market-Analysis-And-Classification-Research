@@ -1,71 +1,86 @@
-This project is fully automated from **data acquisition to model deployment**, using two modular notebooks:
+# Public Sector Data Buyer Detection: End-to-End Pipeline
 
-## 1. API Call and Full Automatic Data Generation Label Creation.ipynb
-- Connects to the official **USAJobs API** and pulls federal job postings based on configurable search criteria
-- Cleans and parses returned data, standardizes fields, creates meta-data, and formats for modeling
+This project provides a fully automated pipeline for identifying third-party data demand in U.S. federal job postings. By integrating data acquisition, weak labeling, and NLP modeling, it generates a ranked list of roles likely to purchase external data, helping vendors and researchers target relevant public sector opportunities.
 
-**⚠️ Setup Instructions Before Running**
 
-**Update file paths:**
-Use Ctrl + F to find and replace all instances of
-C://Users//...// with your local directory path.
 
-**Insert your API credentials:**
-Replace the placeholder Authorization-Key with your own key from developer.usajobs.gov.
-Ensure the email address used in the API header matches the one registered with your key.
+## Recommended Entry Point: Full Pipeline Notebook
 
-It is fully automated and will automatically download the wrangled data to your designated file path.
-Output is saved in a structured format (CSV).
+### `Full Pipeline Combined.ipynb`
 
-**All keyword lists are fully editable**, allowing you to adapt tagging logic to reflect new tools, vendors, and terminology as the public sector data market evolves
+This unified notebook handles the complete process:
 
-## 2. Automated Modeling and Lead Generating.ipynb
-- Loads labeled job data and feeds it into a **prebuilt NLP modeling pipeline**
-- Applies preprocessing:
-  - TF-IDF text vectorization
-  - One-hot encoding of structured fields
-  - SMOTE-based class balancing
-- Generates predictions using a trained **NLP logistic regression model**
-- Outputs:
-  - `PredictedLabel` (0/1)
-  - `DataBuyerScore` (likelihood ∈ [0,1])
-- Automatically **exports a ranked lead list** of high-priority public sector buyer roles
+1. Connects to the USAJobs API to fetch real-time job postings.
+2. Cleans, labels, and structures the data.
+3. Applies a pre-trained NLP model to score third-party data demand.
+4. Outputs a ranked list of predicted buyers to CSV.
 
-**⚠️ Setup Instructions Before Running**
+**Before Running:**
+- Adjust the `DATA_PATH` variable to set your preferred working directory.
+- Insert your USAJobs API credentials in the request headers.
+- Ensure pretrained `.joblib` files (model, vectorizer, pipeline) are available in the working folder.
 
-**Set File Paths**
-Replace all file paths in the notebook with your own local paths.
-Use Ctrl + F to search for and replace all instances of the default path (C://Users/.../) with your desired directory.
 
-**Data File Consistency**
-Ensure the input CSV file has the same name and format as the one created by the automated data acquisition script.
->If you used the USAJobs fetcher provided in this repository, no changes are needed.
 
-**Pipeline Files**
-The notebook depends on pretrained pipeline files (.pkl files for vectorizers, transformers, and the classifier), which are included in this repository.
-Be sure they are downloaded and saved in the correct folder as referenced in the notebook.
+## Modular Notebooks (Optional for Customization)
 
-###  Reusability
-All model and feature pipelines are stored in `.pkl` files (included in this repo). This allows:
-- Plug-and-play reruns on new job data
-- Scalable deployment on different job boards
-- Consistent inference without retraining
+The full pipeline is also available in two modular components for deeper inspection or future adaptation.
 
-## Dependencies
+### 1. `API Call and Full Automatic Data Generation Label Creation.ipynb`
+
+Handles the data acquisition and labeling phase.
+
+**Functionality:**
+- Connects to the USAJobs API with configurable keyword search.
+- Parses and cleans job metadata and descriptions.
+- Applies labeling logic based on role attributes and keyword presence.
+- Outputs a structured, labeled dataset in CSV format.
+
+**Setup:**
+- Insert your API credentials (email and Authorization-Key).
+- Update the output path using the `DATA_PATH` variable.
+- Customize the keyword list to target specific domains (e.g., fraud, analytics, healthcare).
+
+
+### 2. `Automated Modeling and Lead Generating.ipynb`
+
+Handles the modeling and prediction phase.
+
+**Functionality:**
+- Loads the labeled dataset.
+- Applies TF-IDF text vectorization, one-hot encoding, and SMOTE class balancing.
+- Uses a trained logistic regression classifier to predict data-buying likelihood.
+- Outputs binary labels and continuous scores, and saves a filtered lead list.
+
+**Setup:**
+- Ensure the input file matches the output from the labeling notebook.
+- Update paths using the `DATA_PATH` variable.
+- Verify all required `.joblib` pipeline components are present.
+
+##  Dependencies
 
 This project requires the following Python packages:
 
-- `pandas` – for data manipulation  
-- `numpy` – for numerical operations  
-- `scikit-learn` – for TF-IDF vectorization, SMOTE, and logistic regression modeling  
-- `nltk` – for text preprocessing (tokenization, stop word removal)  
-- `requests` – for accessing the USAJOBS API  
-- `json` – for parsing API responses  
-- `matplotlib` – for plotting score distributions and outputs  
-- `tqdm` – for progress tracking during data collection  
-- `fuzzywuzzy` or `rapidfuzz` – for fuzzy string matching in weak supervision
+- pandas  
+- numpy  
+- scikit-learn  
+- nltk  
+- requests  
+- json  
+- matplotlib  
+- tqdm  
+- fuzzywuzzy or rapidfuzz  
 
 All dependencies are listed in `requirements.txt`.
+
+
+
+## Reusability & Extension
+
+- All model components are stored in reusable `.joblib` files.
+- The pipeline can be rerun on any new job dataset by changing the input file path.
+- Easily adaptable for new labeling rules, different job boards, or extended use cases in public sector analytics.
+
 
 > **Note**: You may need to run `nltk.download('stopwords')` and `nltk.download('punkt')` the first time you use the text preprocessing functions.
 
