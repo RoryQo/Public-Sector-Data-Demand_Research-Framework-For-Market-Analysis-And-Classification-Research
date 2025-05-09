@@ -4,7 +4,7 @@ This project provides a fully automated pipeline for identifying third-party dat
 
 
 This project is fully automated from **data acquisition to model deployment**, using two modular notebooks:
-# Public Sector Data Buyer Detection: End-to-End Pipeline
+
 
 ## 1. API Call and Full Automatic Data Generation Label Creation.ipynb
 - Connects to the official **USAJobs API** and pulls federal job postings based on configurable search criteria
