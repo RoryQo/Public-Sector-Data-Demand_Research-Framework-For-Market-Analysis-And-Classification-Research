@@ -25,7 +25,6 @@ pip install -r requirements.txt
 pip install -e .
 
 ```
-
 ## Functions
 
 ### `fetch_and_score_job`
@@ -75,11 +74,11 @@ Search USAJobs live by keyword, fetch matching jobs, preprocess them, and predic
 **Output**
 
 - Pandas DataFrame containing:
-  - data_buyer_score
-  - title
-  - agency
-  - location
-  - job_id
+  - `data_buyer_score`
+  - `title`
+  - `agency`
+  - `location`
+  - `job_id`
 
 **Example**
 
