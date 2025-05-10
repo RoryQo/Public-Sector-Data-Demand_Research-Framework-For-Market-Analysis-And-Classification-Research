@@ -1,7 +1,10 @@
 # Public Sector Data Buyer Detection: End-to-End Pipeline
 
-This project provides a fully automated pipeline for identifying third-party data demand in U.S. federal job postings. Integrating data acquisition, weak and supervised labeling, structured feature engineering, and NLP modeling generates a ranked list of roles likely to purchase external data, helping vendors and researchers target relevant public sector opportunities.
+This project provides a fully automated pipeline for identifying third-party data demand in U.S. federal job postings.
+Integrating data acquisition, weak and supervised labeling, structured feature engineering, and NLP modeling generates a ranked list of roles likely to purchase external data, helping vendors and researchers target relevant public sector opportunities.
 
+The project is fully automated from data acquisition to model deployment, using two modular notebooks,
+and is supplemented by a modular Python package for easy integration of scoring and search functions into custom workflows.
 
 This project is fully automated from **data acquisition to model deployment**, using two modular notebooks:
 
