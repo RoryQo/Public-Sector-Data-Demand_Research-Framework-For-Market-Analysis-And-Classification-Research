@@ -18,8 +18,10 @@ It automates the process of scraping, feature engineering, and scoring, making i
 Clone the repository and install locally:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
-cd YOUR_REPO_NAME
+git clone https://github.com/RoryQo/Public-Sector-Data-Demand_Research-Framework-For-Market-Analysis-And-Classification.git
+
+pip install -r requirements.txt
+
 pip install -e .
 
 ```
