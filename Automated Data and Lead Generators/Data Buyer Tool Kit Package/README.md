@@ -124,15 +124,15 @@ print(scored_jobs)
 
 ## Typical Use Case
 
-- Search for jobs by keyword (e.g., "fraud analyst")
+- **Search** for jobs by keyword (e.g., "fraud analyst")
 
-- Fetch full job descriptions live from USAJobs
+- **Fetch full** job descriptions live from USAJobs
 
-- Preprocess the data automatically using engineered features (title, duties, agency, seniority, use case match)
+- **Preprocess** the data automatically using engineered features (title, duties, agency, seniority, use case match)
 
-- Predict the Data Buyer Score
+- **Predict** the Data Buyer Score
 
-- Rank leads based on scores for outreach targeting
+- **Rank** leads based on scores for outreach targeting
 
 
 
