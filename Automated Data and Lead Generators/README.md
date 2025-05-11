@@ -8,6 +8,21 @@ and is supplemented by a modular Python package for easy integration of scoring 
 
 This project is fully automated from **data acquisition to model deployment**, using two modular notebooks:
 
+## 0.0 Data Buyer Toolkit (Python Package)
+
+In addition to the main notebooks, this repository includes a standalone python package.
+
+The **Data Buyer Toolkit** provides lightweight, reusable Python functions for:
+
+- **Fetching and scoring a single job by ID** (`fetch_and_score_job`)
+- **Searching USAJobs live by keyword and scoring results** (`search_and_score_keyword_live`)
+- **Batch processing and scoring multiple job titles** (`batch_fetch_and_score_jobs`)
+
+These functions allow users to **integrate third-party data buyer detection into their own workflows**,  
+without needing to manually run the full notebooks.
+
+👉 **See the `data_buyer_toolkit` folder for installation instructions and usage examples.**
+
 
 ## 1. API Call and Full Automatic Data Generation Label Creation.ipynb
 - Connects to the official **USAJobs API** and pulls federal job postings based on configurable search criteria
@@ -75,20 +90,6 @@ This project requires the following Python packages:
 
 All dependencies are listed in `requirements.txt`.
 
-## Data Buyer Toolkit (Python Package)
-
-In addition to the main notebooks, this repository includes a standalone python package.
-
-The **Data Buyer Toolkit** provides lightweight, reusable Python functions for:
-
-- **Fetching and scoring a single job by ID** (`fetch_and_score_job`)
-- **Searching USAJobs live by keyword and scoring results** (`search_and_score_keyword_live`)
-- **Batch processing and scoring multiple job titles** (`batch_fetch_and_score_jobs`)
-
-These functions allow users to **integrate third-party data buyer detection into their own workflows**,  
-without needing to manually run the full notebooks.
-
-👉 **See the `data_buyer_toolkit` folder for installation instructions and usage examples.**
 
 
 ## Reusability & Extension
