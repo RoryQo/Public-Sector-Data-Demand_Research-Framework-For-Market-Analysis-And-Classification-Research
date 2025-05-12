@@ -10,16 +10,14 @@ authors:
     orcid: 0009-0006-7483-6769
     equal-contrib: true
     affiliation: "1"
- 
 affiliations:
- - name: University of Pittsburgh
-   index: 1
-   ror: 00hx57361
-
+  - name: University of Pittsburgh
+    index: 1
+    ror: 00hx57361
 date: 03 May 2025
 bibliography: paper.bib
-
- 
+nocite: |
+  @*
 ---
 
 # Summary
@@ -39,4 +37,7 @@ vendors cannot reliably connect with or identify clients.
 This project addresses this inefficiency by creating a reproducible framework
 to estimate this demand through job descriptions in the available posts. Additionally, it outputs a ranked list of job titles and agencies based on their likelihood of being data buyers, enabling researchers and data vendors to identify likely clients and prioritize their outreach based on these scores.
 
+# References
+::: {#refs}
+:::
 
