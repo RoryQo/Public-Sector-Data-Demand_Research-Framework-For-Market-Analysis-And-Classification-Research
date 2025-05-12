@@ -15,17 +15,20 @@ import joblib
 # Helper to Load Pipeline
 # ------------------------
 
-def load_pipeline(model_path="models/your_model.pkl"):
+def load_pipeline():
     """
-    Loads the trained machine learning pipeline safely,
+    Loads the trained NLP pipeline model from inside the package (nlp_pipeline_with_smote.joblib),
     suppressing version mismatch warnings at the point of load.
     """
     with warnings.catch_warnings():
         warnings.simplefilter("ignore", InconsistentVersionWarning)
         warnings.simplefilter("ignore", UserWarning)
         warnings.simplefilter("ignore", FutureWarning)
-        model = joblib.load(model_path)
-    return model
+        
+        with importlib.resources.path('data_buyer_toolkit', 'nlp_pipeline_with_smote.joblib') as model_path:
+            pipeline = joblib.load(model_path)
+    
+    return pipeline
 # ------------------------
 # Preprocessing Function
 # ------------------------
