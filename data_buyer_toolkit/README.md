@@ -1,139 +1,197 @@
-# Data Buyer Toolkit
-
-A Python package to identify and score potential third-party data buyers from U.S. public sector job postings using Natural Language Processing (NLP) and feature engineering.
+# Data Buyer Toolkit — Function Documentation
 
 ## Overview
 
-The Data Buyer Toolkit processes U.S. federal job postings to predict which positions are likely involved in purchasing third-party data.
-It automates the process of scraping, feature engineering, and scoring, making it a valuable tool for public sector market intelligence, lead generation, and vendor targeting.
+The `data_buyer_toolkit` package is a core component of the broader **Public Sector Data Demand Research Framework**.  
+It provides a modular set of tools to **analyze, preprocess, and score federal government job postings** from USAJobs for **third-party data acquisition demand**.
 
-- The core capabilities include:
-- Live USAJobs search by keyword
-- Automatic job description preprocessing and feature construction
-- Scoring jobs using a trained machine learning pipeline
-- Batch scoring multiple roles at once
+Specifically, this package allows users to:
+- Load a trained natural language processing (NLP) model.
+- Fetch live job data from the USAJobs API.
+- Preprocess and feature-engineer job descriptions for model input.
+- Score the likelihood that a government position involves external data purchasing.
+- Target specific use cases, such as fraud detection, sentiment analysis, patient record matching, or advertising targeting.
 
-## Installation
+By operationalizing job text analysis, this package helps commercial data vendors, researchers, and policy analysts **identify promising government leads** and **map market demand trends** for external data products.
 
-Clone the repository and install locally:
+---
 
-```bash
-git clone https://github.com/RoryQo/Public-Sector-Data-Demand_Research-Framework-For-Market-Analysis-And-Classification.git
+# Function Inputs and Outputs
 
-pip install -r requirements.txt
-
-pip install -e .
-
-```
-## Functions
-
-### `fetch_and_score_job`
-
-**Purpose**
-Fetch a job posting from USAJobs by ControlNumber and predict its likelihood of being a third-party data buyer.
-
-**Inputs**
-
-- `job_id` (str): USAJobs ControlNumber
-- `api_key` (str): Your USAJobs API key
-- `email` (str): Your registered USAJobs email
-- `pipeline_path` (str): Path to your trained `.joblib pipeline` (default: "nlp_pipeline_with_smote.joblib")
-
-**Output**
-
-Dictionary containing:
-
-- `data_buyer_score` (float, 0 to 1)
-- `title` (str): Job title
-- `agency` (str): Hiring agency
-
-**Example**
+## `load_pipeline()`
 
 ```python
-from data_buyer_toolkit import fetch_and_score_job
-
-result = fetch_and_score_job("820370600", api_key="your-api-key", email="your-email")
-print(result)
+from data_buyer_toolkit.toolkit import load_pipeline
+pipeline = load_pipeline()
 ```
 
-### `search_and_score_keyword_live`
+**Purpose**:  
+Load the trained NLP pipeline stored inside the package (`nlp_pipeline_with_smote.joblib`).
 
-**Purpose**
+**Inputs**:
+- None
 
-Search USAJobs live by keyword, fetch matching jobs, preprocess them, and predict their likelihood of buying third-party data.
+**Outputs**:
+- A scikit-learn pipeline object containing:
+  - A preprocessing step (`preprocessor`)
+  - A classification step (`classifier`)
 
-**Inputs**
+---
 
-- `keyword` (str): Search term (e.g., "data analyst", "procurement specialist")
-- `api_key` (str): USAJobs API key
-- `email` (str): USAJobs email
-- `pipeline_path` (str): Path to your trained pipeline
-- `max_results` (int, default=10): How many jobs to fetch
-- `delay` (float, default=0.5): Optional delay between API calls
+## `preprocess_job_api_response(job_json)`
+**Purpose**:  
+Preprocess a single USAJobs API job posting into a structured, model-ready pandas DataFrame.
 
-**Output**
+**Inputs**:
+- `job_json` (`dict`):  
+  A dictionary representing a single job posting JSON, typically from the USAJobs API.  
+  Must contain at least:
+  - `PositionTitle`
+  - `OrganizationName`
+  - `UserArea -> Details -> JobSummary`
+  - (Optional) `MajorDuties`
 
-- Pandas DataFrame containing:
-  - `data_buyer_score`
-  - `title`
-  - `agency`
-  - `location`
-  - `job_id`
+**Outputs**:
+- `df_processed` (`pd.DataFrame`):  
+  A **single-row** DataFrame with all engineered features needed for modeling and scoring.
 
-**Example**
+---
+
+## `fetch_and_score_job(job_id, api_key, email)`
 
 ```python
-from data_buyer_toolkit import search_and_score_keyword_live
-
-jobs = search_and_score_keyword_live(
-    keyword="contract specialist",
-    api_key="your-api-key",
-    email="your-email",
-    max_results=5
-)
-
-print(jobs)
+score_result = fetch_and_score_job(job_id="1234567", api_key="YOUR_USAJOBS_API_KEY", email="YOUR_EMAIL@example.com")
+print(score_result)
 ```
 
-### `batch_fetch_and_score_jobs`
+**Purpose**:  
+Fetch a job posting by its ID from USAJobs, preprocess it, and score its likelihood of being a third-party data buyer using the NLP model.
 
-**Purpose**
+**Inputs**:
+- `job_id` (`str` or `int`):  
+  The USAJobs position ID.
+- `api_key` (`str`):  
+  Your registered [USAJobs API Key](https://developer.usajobs.gov/).
+- `email` (`str`):  
+  Email address used as a `User-Agent` for the API call (must match your registered account).
 
-Given a list of job title keywords, search, fetch, preprocess, and score all matches automatically.
+**Outputs**:
+- `result` (`dict`):  
+  A dictionary with:
+  - `data_buyer_score` (`float`): The predicted probability (0 to 1) that this job is a data buyer.
+  - `title` (`str`): The job's title.
+  - `agency` (`str`): The hiring agency.
 
-**Inputs**
+---
 
-- `job_titles` (list of str): List of job titles/keywords
-- `api_key` (str): USAJobs API key
-- `email` (str): USAJobs email
-- `pipeline_path` (str): Path to trained pipeline
-- `delay` (float, optional): Delay between jobs (default: 1 second)
-
-**Output**
-
-- Pandas DataFrame containing scored jobs
-
-**Example**
+## `search_job_ids_by_title(position_title, api_key, email, max_results=10)`
 
 ```python
-from data_buyer_toolkit import batch_fetch_and_score_jobs
-
-titles = ["grants specialist", "data analyst", "procurement officer"]
-scored_jobs = batch_fetch_and_score_jobs(titles, api_key="your-api-key", email="your-email")
-print(scored_jobs)
+job_matches = search_job_ids_by_title(position_title="Data Scientist", api_key="YOUR_USAJOBS_API_KEY", email="YOUR_EMAIL@example.com")
 ```
 
-## Typical Use Case
+**Purpose**:  
+Search the USAJobs API for job postings by job title keyword.
 
-- **Search** for jobs by keyword (e.g., "fraud analyst")
+**Inputs**:
+- `position_title` (`str`):  
+  Keyword(s) to search job titles.
+- `api_key` (`str`):  
+  Your USAJobs API key.
+- `email` (`str`):  
+  Your email address for the API `User-Agent`.
+- `max_results` (`int`, default = 10):  
+  Maximum number of jobs to return.
 
-- **Fetch full** job descriptions live from USAJobs
+**Outputs**:
+- `jobs` (`list` of `dict`):  
+  A list of jobs where each job is a dictionary with:
+  - `job_id` (`str`)
+  - `title` (`str`)
+  - `agency` (`str`)``
 
-- **Preprocess** the data automatically using engineered features (title, duties, agency, seniority, use case match)
+---
 
-- **Predict** the Data Buyer Score
+##`batch_fetch_and_score_jobs(job_titles, api_key, email)`
 
-- **Rank** leads based on scores for outreach targeting
+```python
+titles = ["Data Analyst", "Contract Specialist", "Program Manager"]
+batch_scores = batch_fetch_and_score_jobs(titles, api_key="YOUR_USAJOBS_API_KEY", email="YOUR_EMAIL@example.com")
+print(batch_scores)
+```
 
+**Purpose**:  
+Search and score multiple job titles in batch.
 
+**Inputs**:
+- `job_titles` (`list` of `str`):  
+  A list of job titles or keywords to search and score.
+- `api_key` (`str`):  
+  USAJobs API key.
+- `email` (`str`):  
+  USAJobs API registered email address.
 
+**Outputs**:
+- `results_df` (`pd.DataFrame`):  
+  A DataFrame where each row is:
+  - Title
+  - Agency
+  - Data buyer score
+
+---
+
+## `fetch_and_score_top_by_use_case_auto(api_key, email, use_case="Fraud", top_n=100)`
+
+```python
+top_fraud_jobs = fetch_and_score_top_by_use_case_auto(api_key="YOUR_USAJOBS_API_KEY", email="YOUR_EMAIL@example.com", use_case="Fraud", top_n=50)
+print(top_fraud_jobs)
+```
+
+**Purpose**:  
+Automatically search a broad set of keywords, pull all matches, and rank top-scoring jobs for a selected use case (e.g., Fraud, Sentiment).
+
+**Inputs**:
+- `api_key` (`str`):  
+  USAJobs API key.
+- `email` (`str`):  
+  USAJobs API email `User-Agent`.
+- `use_case` (`str`, default = `"Fraud"`):  
+  Which use case column to filter and sort on. Options include:
+  - `Fraud`
+  - `Sentiment`
+  - `PatientMatching`
+  - `AdTargeting`
+- `top_n` (`int`, default = 100):  
+  Number of top jobs to return.
+
+**Outputs**:
+- `top_jobs_df` (`pd.DataFrame`):  
+  A DataFrame with top job titles, agencies, and their data buyer scores filtered by the selected use case.
+
+---
+
+# Quick Visual Summary
+
+| Function | Input | Output |
+|:---------|:------|:-------|
+| `load_pipeline()` | None | Scikit-learn pipeline |
+| `preprocess_job_api_response()` | `job_json` dict | Preprocessed DataFrame |
+| `fetch_and_score_job()` | `job_id`, `api_key`, `email` | Dict: score, title, agency |
+| `search_job_ids_by_title()` | `position_title`, `api_key`, `email`, `max_results` | List of job dicts |
+| `batch_fetch_and_score_jobs()` | List of titles, `api_key`, `email` | Results DataFrame |
+| `fetch_and_score_top_by_use_case_auto()` | `api_key`, `email`, `use_case`, `top_n` | Top jobs DataFrame |
+
+---
+
+# When to Use Each Function
+
+| Situation | Recommended Function |
+|:----------|:----------------------|
+| You want to **load the trained machine learning model** | `load_pipeline()` |
+| You have a **raw USAJobs API job posting** and want to **prepare it for scoring** | `preprocess_job_api_response(job_json)` |
+| You know a **specific job ID** and want to **score that job** | `fetch_and_score_job(job_id, api_key, email)` |
+| You know a **job title keyword** and want to **find matching job IDs** | `search_job_ids_by_title(position_title, api_key, email)` |
+| You have a **list of job titles** and want to **batch search and score them** | `batch_fetch_and_score_jobs(job_titles, api_key, email)` |
+| You want to **search broadly across many jobs** and **filter top scoring jobs by a specific use case** (like fraud detection) | `fetch_and_score_top_by_use_case_auto(api_key, email, use_case)` |
+
+---
