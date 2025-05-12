@@ -22,10 +22,6 @@ def load_pipeline():
 # Preprocessing Function
 # ------------------------
 
-import pandas as pd
-import re
-from rapidfuzz import fuzz, process
-
 def preprocess_job_api_response(job_json):
     """
     Preprocess a single job JSON response into a model-ready dataframe.
@@ -36,8 +32,6 @@ def preprocess_job_api_response(job_json):
     Returns:
         pd.DataFrame: A single-row dataframe ready for model prediction.
     """
-
-    # Basic fields
     title = job_json.get('PositionTitle', '')
     agency = job_json.get('OrganizationName', '')
 
@@ -62,8 +56,8 @@ def preprocess_job_api_response(job_json):
     # Direct keyword match
     related_phrases = [
         "data acquisition", "data procurement", "procure data", "purchase data",
-        "buy data", "acquiring data", "data sourcing", "data licensing", 
-        "external data acquisition", "third-party data", "data vendor", 
+        "buy data", "acquiring data", "data sourcing", "data licensing",
+        "external data acquisition", "third-party data", "data vendor",
         "data provider", "data contracts", "contracting data", "data subscriptions",
         "vendor management", "external data", "commercial data"
     ]
@@ -73,8 +67,8 @@ def preprocess_job_api_response(job_json):
     # Fuzzy match
     signal_phrases = [
         "data acquisition", "data procurement", "procure data", "purchase data",
-        "buy data", "acquiring data", "data sourcing", "data licensing", 
-        "external data", "third-party data", "data vendor", "data provider", 
+        "buy data", "acquiring data", "data sourcing", "data licensing",
+        "external data", "third-party data", "data vendor", "data provider",
         "data contracts", "contracting data", "data subscriptions", "vendor management",
         "commercial data", "data assets", "data commercialization",
         "procurement of data", "external data sources", "data aggregators",
@@ -118,7 +112,7 @@ def preprocess_job_api_response(job_json):
 
     df['AgencySize'] = df['Agency'].apply(classify_agency).fillna('Unknown')
 
-    # Industry
+    # Industry classifier
     def classify_industry(row):
         text = f"{row['JobTitle']} {row['Agency']}".lower()
         if any(word in text for word in ['finance', 'financial', 'account', 'budget']):
@@ -171,28 +165,27 @@ def preprocess_job_api_response(job_json):
 
     df['IsGeneralistRole'] = df['JobTitle'].apply(lambda x: is_generalist(x))
 
-        columns_for_model = [
+    # Ensure all needed columns exist
+    columns_for_model = [
         'JobTitle', 'Agency', 'CombinedText', 
         'IsDataBuyer', 'IsFuzzyMatch', 'IsLikelyDataBuyer',
         'AgencySize', 'Industry', 'IsSeniorRole',
         'IsExplicitDataJob', 'UseCase_Fraud', 'UseCase_Sentiment',
         'UseCase_PatientMatching', 'UseCase_AdTargeting', 'IsGeneralistRole'
     ]
-
     for col in columns_for_model:
         if col not in df.columns:
-            if col in ['IsSeniorRole']:
+            if col == 'IsSeniorRole':
                 df[col] = False
             elif col.startswith('UseCase') or col.startswith('Is'):
                 df[col] = 0
             else:
                 df[col] = 'Unknown'
 
-    df = df[columns_for_model]
-    return df
+    return df[columns_for_model]
 
 # ------------------------
-# Core Functions
+# Core Job Fetch Functions
 # ------------------------
 
 def fetch_and_score_job(job_id, api_key, email):
@@ -242,12 +235,16 @@ def batch_fetch_and_score_jobs(job_titles, api_key, email):
     return pd.DataFrame(results)
 
 # ------------------------
-# USAJobs Live Full Search Functions
+# USAJobs Live Search and Score Functions
 # ------------------------
 
 def fetch_and_score_top_by_use_case_auto(api_key, email, use_case="Fraud", top_n=100):
     headers = {"User-Agent": email, "Authorization-Key": api_key}
-    keywords = ['data', 'contract', 'analyst', 'machine learning', 'marketing']
+    keywords = [
+        'data', 'contract', 'analyst', 'machine learning', 'marketing', 'aquisition',
+        'finance', 'security', 'tech', 'purchasing', 'statistics', 'math', 
+        'data scientist', 'research', 'economist'
+    ]
     url = "https://data.usajobs.gov/api/Search"
     all_jobs = {}
 
@@ -308,7 +305,7 @@ def fetch_and_score_top_by_custom_inputs(api_key, email, search_keywords, use_ca
         params = {'Keyword': keyword, 'ResultsPerPage': 500, 'Page': 1}
         while True:
             response = requests.get(url, headers=headers, params=params)
-            if response.status_code != 200:
+            if response.status_code != 0:
                 break
             jobs = response.json().get('SearchResult', {}).get('SearchResultItems', [])
             if not jobs:
