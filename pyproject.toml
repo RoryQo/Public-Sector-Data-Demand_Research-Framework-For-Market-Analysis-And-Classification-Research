@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "data_buyer_toolkit"
-version = "0.1.0"
+version = "0.1.1"  # bump to 0.1.1 for republishing
 description = "Toolkit for identifying third-party data buyers in U.S. federal job postings from USAJobs."
 readme = "README.md"
 requires-python = ">=3.8"
@@ -26,7 +26,8 @@ dependencies = [
 "Homepage" = "https://github.com/RoryQo/Public-Sector-Data-Demand_Research-Framework-For-Market-Analysis-And-Classification"
 
 [tool.setuptools.packages.find]
-where = ["data_buyer_toolkit"]
+where = ["."]
+include = ["data_buyer_toolkit", "data_buyer_toolkit.*"]
 
 [tool.setuptools.package-data]
 "data_buyer_toolkit" = ["*.joblib"]
