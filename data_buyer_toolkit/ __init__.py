@@ -1,3 +1,12 @@
+# --- Suppress non-critical warnings globally for this package ---
+import warnings
+from sklearn.exceptions import InconsistentVersionWarning
+
+warnings.filterwarnings("ignore", category=InconsistentVersionWarning)
+warnings.filterwarnings("ignore", category=UserWarning)
+warnings.filterwarnings("ignore", category=FutureWarning)
+
+# --- Re-export main functions ---
 from .toolkit import (
     fetch_and_score_job,
     batch_fetch_and_score_jobs,
