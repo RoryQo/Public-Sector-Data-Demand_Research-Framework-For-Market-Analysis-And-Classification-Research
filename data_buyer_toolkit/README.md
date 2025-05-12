@@ -260,3 +260,35 @@ pip install -e .
 pip install notebook ipykernel
 python -m ipykernel install --user --name=data-buyer-env --display-name "Data Buyer Toolkit"
 ```
+
+---
+
+# License
+
+This project is licensed under the **MIT License**.
+
+You are free to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the software, subject to the following conditions:
+
+- The above copyright notice and this permission notice shall be included in all copies or substantial portions of the software.
+- The software is provided "as is", without warranty of any kind, express or implied.
+
+For the full license text, see the [LICENSE](../LICENSE) file included in this repository.
+
+---
+
+# Contributions
+
+Contributions are welcome and encouraged!
+
+If you would like to suggest improvements, add new features, or report bugs, please follow these guidelines:
+
+1. **Fork the repository** to your own GitHub account.
+2. **Create a new branch** for your feature or fix.
+3. **Write clear, descriptive commit messages**.
+4. **Test your changes** thoroughly before submitting.
+5. **Submit a pull request** describing what you have changed and why.
+
+
+---
+
+
