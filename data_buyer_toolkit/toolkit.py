@@ -22,12 +22,27 @@ def load_pipeline():
 # Preprocessing Function
 # ------------------------
 
-def preprocess_job_api_response(job_json):
-    title = job_json['PositionTitle']
-    agency = job_json['OrganizationName']
+import pandas as pd
+import re
+from rapidfuzz import fuzz, process
 
-    desc = job_json['UserArea']['Details'].get('JobSummary', '')
-    duties = job_json['UserArea']['Details'].get('MajorDuties', '')
+def preprocess_job_api_response(job_json):
+    """
+    Preprocess a single job JSON response into a model-ready dataframe.
+
+    Args:
+        job_json (dict): A single job's JSON dictionary from USAJobs API.
+
+    Returns:
+        pd.DataFrame: A single-row dataframe ready for model prediction.
+    """
+
+    # Basic fields
+    title = job_json.get('PositionTitle', '')
+    agency = job_json.get('OrganizationName', '')
+
+    desc = job_json.get('UserArea', {}).get('Details', {}).get('JobSummary', '')
+    duties = job_json.get('UserArea', {}).get('Details', {}).get('MajorDuties', '')
 
     if isinstance(desc, list):
         desc = ' '.join(desc)
@@ -41,30 +56,123 @@ def preprocess_job_api_response(job_json):
         'KeyDuties': duties
     }])
 
+    # Combined text
     df['CombinedText'] = (df['JobDescription'].fillna('') + ' ' + df['KeyDuties'].fillna('')).str.lower()
 
+    # Direct keyword match
     related_phrases = [
         "data acquisition", "data procurement", "procure data", "purchase data",
-        "buy data", "external data acquisition", "third-party data", "data vendor", 
-        "data provider", "data contracts", "data subscriptions", "vendor management"
+        "buy data", "acquiring data", "data sourcing", "data licensing", 
+        "external data acquisition", "third-party data", "data vendor", 
+        "data provider", "data contracts", "contracting data", "data subscriptions",
+        "vendor management", "external data", "commercial data"
     ]
-    pattern = '|'.join([re.escape(phrase) for phrase in related_phrases])
+    pattern = '|'.join(map(re.escape, related_phrases))
     df['IsDataBuyer'] = df['CombinedText'].str.contains(pattern, case=False, na=False).astype(int)
 
+    # Fuzzy match
     signal_phrases = [
-        "data commercialization", "external datasets", "partner data", "data monetization",
-        "vendor data sources", "subscription data", "contracted data"
+        "data acquisition", "data procurement", "procure data", "purchase data",
+        "buy data", "acquiring data", "data sourcing", "data licensing", 
+        "external data", "third-party data", "data vendor", "data provider", 
+        "data contracts", "contracting data", "data subscriptions", "vendor management",
+        "commercial data", "data assets", "data commercialization",
+        "procurement of data", "external data sources", "data aggregators",
+        "data monetization", "sourcing external data", "partner data", "data purchasing agreements",
+        "data ingestion", "subscription data", "data acquisition strategy", "data buying",
+        "external datasets", "external partnerships", "data sharing agreements",
+        "data acquisition channels", "third-party data sources", "sourcing data providers",
+        "managing data vendors", "data reseller", "external data vendors", "contracted data"
     ]
-    def fuzzy_match_phrases(text, phrases, threshold=80):
+
+    def fuzzy_match(text, phrases, threshold=80):
         for phrase in phrases:
             if fuzz.partial_ratio(phrase.lower(), text.lower()) >= threshold:
                 return phrase
         return None
 
-    df['FuzzyMatchedPhrase'] = df['CombinedText'].apply(lambda x: fuzzy_match_phrases(x, signal_phrases))
+    df['FuzzyMatchedPhrase'] = df['CombinedText'].apply(lambda x: fuzzy_match(x, signal_phrases))
     df['IsFuzzyMatch'] = df['FuzzyMatchedPhrase'].notnull().astype(int)
+
+    # Likely buyer if either is true
     df['IsLikelyDataBuyer'] = ((df['IsDataBuyer'] == 1) | (df['IsFuzzyMatch'] == 1)).astype(int)
 
+    # Agency size
+    large_agencies = [
+        "Department of Defense", "Department of Veterans Affairs", "Department of the Treasury",
+        "Department of Homeland Security", "Department of Health and Human Services",
+        "Department of Justice", "Department of the Army"
+    ]
+    medium_agencies = [
+        "Department of Transportation", "Department of Commerce", "Department of Agriculture",
+        "Department of Energy", "Department of the Interior", "National Aeronautics and Space Administration"
+    ]
+
+    def classify_agency(agency_name):
+        if agency_name in large_agencies:
+            return 'Large'
+        elif agency_name in medium_agencies:
+            return 'Medium'
+        else:
+            return 'Small'
+
+    df['AgencySize'] = df['Agency'].apply(classify_agency).fillna('Unknown')
+
+    # Industry
+    def classify_industry(row):
+        text = f"{row['JobTitle']} {row['Agency']}".lower()
+        if any(word in text for word in ['finance', 'financial', 'account', 'budget']):
+            return 'Finance'
+        if any(word in text for word in ['marketing', 'communications', 'advertising']):
+            return 'Marketing'
+        if any(word in text for word in ['medical', 'health', 'clinical', 'pharmacy', 'nurse']):
+            return 'Medical'
+        if any(word in text for word in ['cyber', 'security', 'software', 'data scientist', 'tech', 'information technology']):
+            return 'Security/Tech'
+        if any(word in text for word in ['policy', 'regulation', 'legislative', 'compliance', 'analyst']):
+            return 'Policy'
+        return 'Other'
+
+    df['Industry'] = df.apply(classify_industry, axis=1)
+
+    # Senior role
+    df['IsSeniorRole'] = df['JobTitle'].str.lower().str.contains(r'\bsenior\b|\blead\b|\bchief\b|\bprincipal\b|\bdirector\b|\bhead\b', na=False)
+
+    # Explicitly a "data" job
+    data_keywords = ['data', 'analyst', 'scientist', 'analytics', 'statistician', 'intelligence', 'information', 'it']
+    df['IsExplicitDataJob'] = df['JobTitle'].str.lower().str.contains('|'.join(data_keywords), na=False).astype(int)
+
+    # Use case detection
+    use_case_keywords = {
+        'Fraud': ['fraud', 'eligibility', 'verification', 'audit', 'compliance'],
+        'Sentiment': ['sentiment', 'public opinion', 'media monitoring', 'engagement', 'communication'],
+        'PatientMatching': ['patient match', 'interoperability', 'record linkage', 'ehr', 'health record'],
+        'AdTargeting': ['audience segmentation', 'targeting', 'ad performance', 'campaign data']
+    }
+    for use_case, keywords in use_case_keywords.items():
+        pattern = '|'.join(map(re.escape, keywords))
+        df[f'UseCase_{use_case}'] = df['CombinedText'].str.contains(pattern, case=False, na=False).astype(int)
+
+    # Generalist role detection
+    generalist_titles = [
+        'Contract Specialist', 'Grants Officer', 'Grants Specialist', 'Budget Officer',
+        'Administrative Officer', 'Operations Coordinator', 'Program Coordinator',
+        'Project Coordinator', 'Procurement Specialist', 'Procurement Analyst',
+        'Communications Specialist', 'Public Affairs Officer', 'Public Information Officer',
+        'Community Outreach Coordinator', 'Health IT Coordinator', 'Program Specialist',
+        'Program Manager', 'Business Operations Specialist'
+    ]
+
+    def is_generalist(title):
+        if not title:
+            return False
+        match, score, _ = process.extractOne(title, generalist_titles, scorer=fuzz.partial_ratio)
+        return score >= 65
+
+    df['IsGeneralistRole'] = df['JobTitle'].apply(lambda x: is_generalist(x))
+
+    # FINAL CLEANUP
+    df = df.fillna('')  # In case any column has missing values
     return df
 
 # ------------------------
