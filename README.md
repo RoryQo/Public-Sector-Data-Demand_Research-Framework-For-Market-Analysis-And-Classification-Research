@@ -53,8 +53,8 @@
   <!-- Faked-centered row -->
   <tr>
     <td colspan="2" style="background-color: white; color: black; padding: 10px;">
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <a href="#appendix-automation-and-reproducibility" style="color: black;">7. Fully Automated Data Buyer Lead Generation</a>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="#appendix-automated-scripts-and-data-buyer-toolkit-package" style="color: black;">7. Automated Data Buyer Lead Generation (Package & Scripts)</a>
     </td>
   </tr>
 </table>
@@ -728,7 +728,10 @@ This analysis combines keyword matching, machine learning, and contextual classi
 
 ---
 
-## Appendix: Automation and Reproducibility
+## Appendix: Automated Scripts and Data Buyer Toolkit Package
+
+
+### Automated Scripts
 
 This project is fully automated from **data acquisition to model deployment**, using two modular notebooks:
 
@@ -761,6 +764,31 @@ All model and feature pipelines are stored in `.pkl` files (included in this rep
 - Scalable deployment on different job boards
 - Consistent inference without retraining
 - 
+
+### Data Buyer Toolkit Package
+
+## Project Package: `data_buyer_toolkit`
+
+At the core of this framework is the [`data_buyer_toolkit`](https://github.com/RoryQo/Public-Sector-Data-Demand_Research-Framework-For-Market-Analysis-And-Classification/tree/main/data_buyer_toolkit) — a modular Python package designed to support and extend the functionality of the project notebooks.
+
+While the notebooks (`Data Acquisition and Wrangling.ipynb`, `Automated Modeling and Lead Generating.ipynb`) offer a fully automated end-to-end pipeline, the `data_buyer_toolkit` package provides **more direct control over individual processing steps** and **greater flexibility for custom applications**.
+
+### Key functionalities include:
+- **Model loading**: Load the trained NLP model (`nlp_pipeline_with_smote.joblib`) for scoring new postings.
+- **Job preprocessing**: Clean and feature-engineer raw USAJobs API data into a standardized, model-ready format.
+- **Live job fetching**: Query USAJobs postings by job title, agency, or ID in real time.
+- **Real-time scoring**: Assign `DataBuyerScore` probabilities to individual postings or batches of roles.
+- **Use case targeting**: Filter postings aligned to strategic demand areas such as fraud detection, sentiment analysis, patient record matching, and ad targeting.
+
+
+### How the Package Fits the Project
+- The **notebooks** offer a **ready-to-run full automation flow**.
+- The **package** enables **modular, flexible usage** for users who want:
+  - Custom workflows
+  - Alternative scoring strategies
+  - Manual selection of postings to score
+  - Integration into larger CRM, scraping, or lead prioritization systems
+
 
 ---
 
