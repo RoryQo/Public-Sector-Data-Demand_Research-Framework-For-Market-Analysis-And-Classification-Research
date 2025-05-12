@@ -171,8 +171,24 @@ def preprocess_job_api_response(job_json):
 
     df['IsGeneralistRole'] = df['JobTitle'].apply(lambda x: is_generalist(x))
 
-    # FINAL CLEANUP
-    df = df.fillna('')  # In case any column has missing values
+        columns_for_model = [
+        'JobTitle', 'Agency', 'CombinedText', 
+        'IsDataBuyer', 'IsFuzzyMatch', 'IsLikelyDataBuyer',
+        'AgencySize', 'Industry', 'IsSeniorRole',
+        'IsExplicitDataJob', 'UseCase_Fraud', 'UseCase_Sentiment',
+        'UseCase_PatientMatching', 'UseCase_AdTargeting', 'IsGeneralistRole'
+    ]
+
+    for col in columns_for_model:
+        if col not in df.columns:
+            if col in ['IsSeniorRole']:
+                df[col] = False
+            elif col.startswith('UseCase') or col.startswith('Is'):
+                df[col] = 0
+            else:
+                df[col] = 'Unknown'
+
+    df = df[columns_for_model]
     return df
 
 # ------------------------
