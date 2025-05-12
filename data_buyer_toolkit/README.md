@@ -1,4 +1,58 @@
-# Data Buyer Toolkit — Function Documentation
+<h1 align="center">Data Buyer Toolkit — Function Documentation</h1>
+
+
+<table align="center">
+  <tr>
+    <td colspan="2" align="center" style="background-color: white; color: black; padding: 10px;">
+      <strong>Table of Contents</strong>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="background-color: white; color: black; padding: 10px;">
+      1. <a href="#overview" style="color: black;">Overview</a>
+    </td>
+    <td align="center" style="background-color: gray; color: black; padding: 10px;">
+      2. <a href="#folder-structure" style="color: black;">Folder Structure</a>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="background-color: gray; color: black; padding: 10px;">
+      3. <a href="#function-inputs-and-outputs" style="color: black;">Function Inputs and Outputs</a>
+    </td>
+    <td align="center" style="background-color: white; color: black; padding: 10px;">
+      4. <a href="#quick-visual-summary" style="color: black;">Quick Visual Summary</a>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="background-color: white; color: black; padding: 10px;">
+      5. <a href="#when-to-use-each-function" style="color: black;">When to Use Each Function</a>
+    </td>
+    <td align="center" style="background-color: gray; color: black; padding: 10px;">
+      6. <a href="#installation-instructions" style="color: black;">Installation Instructions</a>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="background-color: gray; color: black; padding: 10px;">
+      7. <a href="#license" style="color: black;">License</a>
+    </td>
+    <td align="center" style="background-color: white; color: black; padding: 10px;">
+      8. <a href="#contributions" style="color: black;">Contributions</a>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" align="center" style="background-color: gray; color: black; padding: 10px;">
+      9. <a href="#usage-examples" style="color: black;">Usage Examples Notebook</a>
+    </td>
+  </tr>
+</table>
+
+
+
 
 ## Overview
 
@@ -304,5 +358,36 @@ If you would like to suggest improvements, add new features, or report bugs, ple
 
 
 ---
+
+# Usage Examples
+
+A full Jupyter notebook with hands-on examples is provided to demonstrate the `data_buyer_toolkit` in action.
+
+📂 Access it here: [examples/usage_examples.ipynb](https://github.com/RoryQo/Public-Sector-Data-Demand_Research-Framework-For-Market-Analysis-And-Classification/tree/main/data_buyer_toolkit/examples)
+
+
+
+## What the Notebook Covers
+
+- **Load the trained NLP model** and initialize the pipeline.
+- **Fetch job postings** live from the USAJobs API.
+- **Preprocess job data** into a model-ready format.
+- **Score jobs** using the `DataBuyerScore`.
+- **Batch search and score** multiple job titles.
+- **Filter and rank** jobs by targeted use cases (e.g., fraud detection, sentiment analysis).
+
+
+
+## How to Use
+
+1. Open `examples/usage_examples.ipynb` after installing the package.
+2. Insert your USAJobs **API Key** and **email address** where indicated.
+3. Run the cells to explore example workflows and customize as needed.
+
+
+The notebook provides a practical guide for integrating the toolkit into custom workflows for real-time scoring, lead generation, and market targeting.
+
+
+
 
 
