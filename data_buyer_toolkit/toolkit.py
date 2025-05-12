@@ -7,17 +7,25 @@ import requests
 import joblib
 from rapidfuzz import fuzz, process
 import importlib.resources
+import warnings
+from sklearn.exceptions import InconsistentVersionWarning
+import joblib
 
 # ------------------------
 # Helper to Load Pipeline
 # ------------------------
 
-def load_pipeline():
-    """Load the nlp_pipeline_with_smote.joblib from inside the package."""
-    with importlib.resources.path('data_buyer_toolkit', 'nlp_pipeline_with_smote.joblib') as model_path:
-        pipeline = joblib.load(model_path)
-    return pipeline
-
+def load_pipeline(model_path="models/your_model.pkl"):
+    """
+    Loads the trained machine learning pipeline safely,
+    suppressing version mismatch warnings at the point of load.
+    """
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", InconsistentVersionWarning)
+        warnings.simplefilter("ignore", UserWarning)
+        warnings.simplefilter("ignore", FutureWarning)
+        model = joblib.load(model_path)
+    return model
 # ------------------------
 # Preprocessing Function
 # ------------------------
