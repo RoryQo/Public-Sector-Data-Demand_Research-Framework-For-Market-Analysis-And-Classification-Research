@@ -37,6 +37,9 @@ vendors cannot reliably connect with or identify clients.
 This project addresses this inefficiency by creating a reproducible framework
 to estimate this demand through job descriptions in the available posts. Additionally, it outputs a ranked list of job titles and agencies based on their likelihood of being data buyers, enabling researchers and data vendors to identify likely clients and prioritize their outreach based on these scores.
 
+\newpage
+
+
 # References
 ::: {#refs}
 :::
