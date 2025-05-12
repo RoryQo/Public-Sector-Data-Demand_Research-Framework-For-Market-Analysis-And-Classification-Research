@@ -95,7 +95,7 @@ This project requires the following Python packages:
 - tqdm  
 - fuzzywuzzy or rapidfuzz  
 
-All dependencies are listed in `requirements.txt`.
+All dependencies are listed in `reqs.txt`.
 
 
 
