@@ -71,15 +71,18 @@ By operationalizing job text analysis, this package helps commercial data vendor
 ### Folder Structure
 
 ```
-data_buyer_toolkit/
-    ├── examples/
-    │     └── usage_examples.ipynb
-    ├── __init__.py
-    ├── README.md
-    ├── nlp_pipeline_with_smote.joblib
-    ├── toolkit.py
+Root Directory:
+├── setup.py
+├── pyproject.toml
 
 
+Python Package: data_buyer_toolkit/
+├── __init__.py
+├── toolkit.py
+├── nlp_pipeline_with_smote.joblib
+├── README.md
+├── examples/
+│   └── usage_examples.ipynb
 ```
 
 ---
