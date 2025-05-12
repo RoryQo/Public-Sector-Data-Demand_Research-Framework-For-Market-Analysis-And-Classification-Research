@@ -57,9 +57,12 @@ This project is fully automated from **data acquisition to model deployment**, u
 
 ## Data Buyer Toolkit (Python Package)
 
+[![PyPI version](https://badge.fury.io/py/data_buyer_toolkit.svg)](https://pypi.org/project/data_buyer_toolkit/)
+
+
 <p align="left">
   <a href="https://github.com/RoryQo/Public-Sector-Data-Demand_Research-Framework-For-Market-Analysis-And-Classification/tree/main/data_buyer_toolkit" target="_blank">
-    <img src="https://img.shields.io/badge/👉 See%20the%20data_buyer_toolkit%20folder-blue?style=for-the-badge" alt="Go to data_buyer_toolkit Folder">
+    <img src="https://img.shields.io/badge/See%20data_buyer_toolkit%20folder-4F8CC9?style=for-the-badge&logo=github&logoColor=white" alt="Go to data_buyer_toolkit Folder" style="border-radius: 8px;">
   </a>
 </p>
 
