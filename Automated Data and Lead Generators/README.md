@@ -1,4 +1,51 @@
-# Public Sector Data Buyer Detection: End-to-End Pipeline
+<h1 align="center">Public Sector Data Buyer Detection: End-to-End Pipeline</h1>
+
+<table align="center">
+  <tr>
+    <td colspan="2" align="center" style="background-color: white; color: black; padding: 10px;">
+      <strong>Table of Contents</strong>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="background-color: white; color: black; padding: 10px;">
+      1. <a href="#project-overview" style="color: black;">Project Overview</a>
+    </td>
+    <td align="center" style="background-color: gray; color: black; padding: 10px;">
+      2. <a href="#data-buyer-toolkit-python-package" style="color: black;">Data Buyer Toolkit (Python Package)</a>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="background-color: gray; color: black; padding: 10px;">
+      3. <a href="#api-call-and-full-automatic-data-generation-label-creationipynb" style="color: black;">API Call and Label Creation</a>
+    </td>
+    <td align="center" style="background-color: white; color: black; padding: 10px;">
+      4. <a href="#automated-modeling-and-lead-generatingipynb" style="color: black;">Automated Modeling and Lead Generating</a>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="background-color: white; color: black; padding: 10px;">
+      5. <a href="#dependencies" style="color: black;">Dependencies</a>
+    </td>
+    <td align="center" style="background-color: gray; color: black; padding: 10px;">
+      6. <a href="#reusability--extension" style="color: black;">Reusability & Extension</a>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="background-color: gray; color: black; padding: 10px;">
+      7. <a href="#-license" style="color: black;">License</a>
+    </td>
+    <td align="center" style="background-color: white; color: black; padding: 10px;">
+      8. <a href="#future-contributions" style="color: black;">Contributions</a>
+    </td>
+  </tr>
+</table>
+
+
+## Project Overview
 
 This project provides a fully automated pipeline for identifying third-party data demand in U.S. federal job postings.
 Integrating data acquisition, weak and supervised labeling, structured feature engineering, and NLP modeling generates a ranked list of roles likely to purchase external data, helping vendors and researchers target relevant public sector opportunities.
@@ -8,7 +55,7 @@ and is supplemented by a modular Python package for easy integration of scoring 
 
 This project is fully automated from **data acquisition to model deployment**, using two modular notebooks:
 
-## 0. Data Buyer Toolkit (Python Package)
+## Data Buyer Toolkit (Python Package)
 
 <p align="left">
   <a href="https://github.com/RoryQo/Public-Sector-Data-Demand_Research-Framework-For-Market-Analysis-And-Classification/tree/main/data_buyer_toolkit" target="_blank">
@@ -31,7 +78,7 @@ See the `data_buyer_toolkit` folder for installation instructions and usage exam
 
 
 
-## 1. API Call and Full Automatic Data Generation Label Creation.ipynb
+## API Call and Full Automatic Data Generation Label Creation.ipynb
 - Connects to the official **USAJobs API** and pulls federal job postings based on configurable search criteria
 - Cleans and parses returned data, standardizes fields, creates meta-data, and formats for modeling
 
@@ -50,7 +97,7 @@ Ensure the email address used in the API header matches the one registered with 
 **All keyword lists are fully editable**, allowing you to adapt tagging logic to reflect new tools, vendors, and terminology as the public sector data market evolves
 This unified notebook handles the complete process:
 
-## 2. Automated Modeling and Lead Generating.ipynb
+## Automated Modeling and Lead Generating.ipynb
 - Loads labeled job data and feeds it into a **prebuilt NLP modeling pipeline**
 - Applies preprocessing:
   - TF-IDF text vectorization
