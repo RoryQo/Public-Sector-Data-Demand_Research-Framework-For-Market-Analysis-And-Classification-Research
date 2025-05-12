@@ -1,6 +1,15 @@
 <h1 align="center">Data Buyer Toolkit — Function Documentation</h1>
 
 
+
+<p align="center">
+  <a href="https://pypi.org/project/data-buyer-toolkit/">
+    <img src="https://img.shields.io/static/v1?label=pypi%20package&message=data_buyer_toolkit%20v0.1.0&color=blue" alt="PyPI package">
+  </a>
+</p>
+
+
+
 <table align="center">
   <tr>
     <td colspan="2" align="center" style="background-color: white; color: black; padding: 10px;">
@@ -56,8 +65,9 @@
 
 ## Overview
 
-The `data_buyer_toolkit` package is a core component of the broader **Public Sector Data Demand Research Framework**.  
-It provides a modular set of tools to **analyze, preprocess, and score federal government job postings** from USAJobs for **third-party data acquisition demand**.
+The `data_buyer_toolkit` package is a modular, published Python library for analyzing, preprocessing, and scoring U.S. federal job postings for third-party data acquisition demand. 
+
+It is a core component of the broader **Public Sector Data Demand Research Framework**, but can also be used independently as a lightweight toolkit for real-time job analysis and data buyer detection.
 
 Specifically, this package allows users to:
 - Load a trained natural language processing (NLP) model.
@@ -282,11 +292,21 @@ Automatically search a broad set of keywords, pull all matches, and rank top-sco
 
 # Installation Instructions
 
-Follow these steps to fully install and set up the `data_buyer_toolkit` for local development or usage inside Jupyter notebooks.
+## PyPi Install
+You can install the package directly from PyPI:
 
----
+```bash
+pip install data-buyer-toolkit
+```
 
-## 1. Clone the Repository
+
+Or for local development (editable mode with GitHub clone):
+- Follow these steps to fully install and set up the `data_buyer_toolkit` for local development or usage inside Jupyter notebooks.
+
+
+## Local Dev Install
+
+### 1. Clone the Repository
 
 First, clone the full project to your local machine:
 
@@ -295,7 +315,7 @@ git clone https://github.com/RoryQo/Public-Sector-Data-Demand_Research-Framework
 cd Public-Sector-Data-Demand_Research-Framework-For-Market-Analysis-And-Classification
 ```
 
-## 2. Create and activate a Virtual Environment
+### 2. Create and activate a Virtual Environment
 
 It is strongly recommended to use a virtual environment for this project.
 
@@ -308,7 +328,7 @@ conda create -n data-buyer-env python=3.10 -y
 conda activate data-buyer-env
 ```
 
-## 3. Install the package in Editable Mode
+### 3. Install the package in Editable Mode
 
 Inside the project root directory:
 
@@ -321,7 +341,7 @@ pip install --upgrade pip
 pip install -e .
 ```
 
-## 4. Install Jupyter Kernel
+### 4. Install Jupyter Kernel
 
 - Install `notebook` and `ipykernel`
 - Create a dedicated Jupyter kernel associated with your environment
