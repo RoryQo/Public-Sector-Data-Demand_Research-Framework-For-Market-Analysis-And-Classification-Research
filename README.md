@@ -69,34 +69,19 @@
 
 # Overview
 
-This project introduces an end-to-end framework for identifying, classifying, and prioritizing public sector demand for external third-party data.  
-It leverages federal job postings from USAJobs.gov to detect roles engaged in data acquisition activities — even when not explicitly labeled — by combining traditional keyword detection, feature engineering, and natural language processing (NLP) modeling.
+This project introduces a modular framework for detecting and prioritizing demand for third-party data across public sector job postings.  
+By combining data acquisition, structured feature engineering, weak supervision, and natural language processing (NLP) modeling, the framework surfaces both explicit and latent roles involved in external data procurement — even when not labeled directly. Job postings are enriched with agency, industry, seniority, and role context, then classified based on linguistic and metadata patterns to generate a ranked list of likely third-party data buyers.
 
-At the core of the framework is the `data_buyer_toolkit` package, a modular Python library that provides:
+The framework is operationalized through two complementary components included in this repository:  
+the `data_buyer_toolkit` Python package, which provides modular functions for job fetching, preprocessing, and real-time scoring; and a pair of fully automated notebooks that handle end-to-end data acquisition, labeling, modeling, and lead generation.  
+These implementations allow users to either run the entire pipeline automatically or flexibly integrate components into their own workflows, CRM systems, or market research tools.
 
-- Automated extraction and preprocessing of USAJobs data
-- Structured feature generation (agency size, industry, seniority, etc.)
-- Detection of explicit and latent data buyer roles using NLP classification
-- Scoring of job postings via a `DataBuyerScore` to prioritize leads
-- Targeted use case mapping for strategic domains such as:
-  - Fraud detection
-  - Sentiment analysis
-  - Patient record matching
-  - Advertising targeting
+While this release focuses on U.S. federal jobs via USAJobs.gov, the underlying framework is designed for scalability.  
+Future extensions could easily adapt it to analyze hiring trends across private sector job boards, state and local agencies, or emerging market demands such as AI readiness, cybersecurity adoption, and health data interoperability.  
+By adjusting data sources, keyword strategies, and modeling targets, this system offers a reusable blueprint for identifying and prioritizing hidden demand across any sector.
 
-Beyond individual role classification, the framework conducts broader **market analysis** to map patterns of public sector demand:
-- How data-related hiring varies by agency size, role seniority, and industry
-- Identification of generalist vs. specialist buyer profiles
-- Visualization of which parts of the government rely most heavily on external data
 
-Through this combined modeling and market research approach, the project highlights **where and how third-party data is operationalized in the federal workforce**.  
-It provides actionable insights for:
 
-- **Vendors**: identifying high-potential government buyers
-- **Researchers**: analyzing the evolution of public sector digital infrastructure
-- **Policymakers**: understanding functional dependence on external data
-
-This framework is fully automated, modular, and designed for scalable adaptation to other datasets, use cases, and classification targets.
 
 ## Applications
 
