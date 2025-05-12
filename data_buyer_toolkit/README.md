@@ -14,6 +14,20 @@ Specifically, this package allows users to:
 
 By operationalizing job text analysis, this package helps commercial data vendors, researchers, and policy analysts **identify promising government leads** and **map market demand trends** for external data products.
 
+### Folder Structure
+
+```
+data_buyer_toolkit/
+    ├── examples/
+    │     └── usage_examples.ipynb
+    ├── __init__.py
+    ├── README.md
+    ├── nlp_pipeline_with_smote.joblib
+    ├── toolkit.py
+
+
+```
+
 ---
 
 # Function Inputs and Outputs
