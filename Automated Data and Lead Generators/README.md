@@ -8,7 +8,7 @@ and is supplemented by a modular Python package for easy integration of scoring 
 
 This project is fully automated from **data acquisition to model deployment**, using two modular notebooks:
 
-## 0.0 Data Buyer Toolkit (Python Package)
+## 0. Data Buyer Toolkit (Python Package)
 
 <p align="left">
   <a href="https://github.com/RoryQo/Public-Sector-Data-Demand_Research-Framework-For-Market-Analysis-And-Classification/tree/main/data_buyer_toolkit" target="_blank">
