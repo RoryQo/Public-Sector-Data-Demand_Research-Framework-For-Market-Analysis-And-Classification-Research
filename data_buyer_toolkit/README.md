@@ -18,10 +18,22 @@ By operationalizing job text analysis, this package helps commercial data vendor
 
 # Function Inputs and Outputs
 
+## `Import the Package`
+
+```python
+from data_buyer_toolkit.toolkit import (
+    fetch_and_score_job,
+    batch_fetch_and_score_jobs,
+    search_job_ids_by_title,
+    fetch_and_score_top_by_use_case_auto,
+    preprocess_job_api_response,
+    load_pipeline,
+)
+```
+
 ## `load_pipeline()`
 
 ```python
-from data_buyer_toolkit.toolkit import load_pipeline
 pipeline = load_pipeline()
 ```
 
