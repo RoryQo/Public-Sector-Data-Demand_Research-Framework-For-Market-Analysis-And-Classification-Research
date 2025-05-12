@@ -195,3 +195,56 @@ Automatically search a broad set of keywords, pull all matches, and rank top-sco
 | You want to **search broadly across many jobs** and **filter top scoring jobs by a specific use case** (like fraud detection) | `fetch_and_score_top_by_use_case_auto(api_key, email, use_case)` |
 
 ---
+
+
+# Installation Instructions
+
+Follow these steps to fully install and set up the `data_buyer_toolkit` for local development or usage inside Jupyter notebooks.
+
+---
+
+## 1. Clone the Repository
+
+First, clone the full project to your local machine:
+
+```bash
+git clone https://github.com/RoryQo/Public-Sector-Data-Demand_Research-Framework-For-Market-Analysis-And-Classification.git
+cd Public-Sector-Data-Demand_Research-Framework-For-Market-Analysis-And-Classification
+```
+
+## 2. Create and activate a Virtual Environment
+
+It is strongly recommended to use a virtual environment for this project.
+
+
+- Create a new conda environment specifying Python version 3.10
+- Activate the conda environment
+
+```bash
+conda create -n data-buyer-env python=3.10 -y
+conda activate data-buyer-env
+```
+
+## 3. Install the package in Editable Mode
+
+Inside the project root directory:
+
+- Upgrade `pip`
+- Install the package in editable mode (`-e`) so local changes are immediately reflected without reinstalling
+
+
+```bash
+pip install --upgrade pip
+pip install -e .
+```
+
+## 4. Install Jupyter Kernel
+
+- Install `notebook` and `ipykernel`
+- Create a dedicated Jupyter kernel associated with your environment
+- Name the kernel something descriptive (e.g., "Data Buyer Toolkit")
+
+```bash
+pip install notebook ipykernel
+python -m ipykernel install --user --name=data-buyer-env --display-name "Data Buyer Toolkit"
+```
