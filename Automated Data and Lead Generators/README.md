@@ -10,6 +10,12 @@ This project is fully automated from **data acquisition to model deployment**, u
 
 ## 0.0 Data Buyer Toolkit (Python Package)
 
+<p align="left">
+  <a href="https://github.com/RoryQo/Public-Sector-Data-Demand_Research-Framework-For-Market-Analysis-And-Classification/tree/main/data_buyer_toolkit" target="_blank">
+    <img src="https://img.shields.io/badge/👉 See%20the%20data_buyer_toolkit%20folder-blue?style=for-the-badge" alt="Go to data_buyer_toolkit Folder">
+  </a>
+</p>
+
 In addition to the main notebooks, this repository includes a standalone python package.
 
 The **Data Buyer Toolkit** provides lightweight, reusable Python functions for:
@@ -21,7 +27,8 @@ The **Data Buyer Toolkit** provides lightweight, reusable Python functions for:
 These functions allow users to **integrate third-party data buyer detection into their own workflows**,  
 without needing to manually run the full notebooks.
 
-👉 **See the `data_buyer_toolkit` folder for installation instructions and usage examples.**
+See the `data_buyer_toolkit` folder for installation instructions and usage examples.
+
 
 
 ## 1. API Call and Full Automatic Data Generation Label Creation.ipynb
