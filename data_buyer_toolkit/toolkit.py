@@ -246,7 +246,7 @@ def batch_fetch_and_score_jobs(job_titles, api_key, email):
     return pd.DataFrame(results)
 
 # ------------------------
-# USAJobs Live Search and Score Functions
+# USAJobs Live Search and Score Functions Usecase
 # ------------------------
 
 def fetch_and_score_top_by_use_case_auto(api_key, email, use_case="Fraud", top_n=100):
@@ -302,3 +302,105 @@ def fetch_and_score_top_by_use_case_auto(api_key, email, use_case="Fraud", top_n
 
     return df_processed[df_processed[use_case_column] == 1].sort_values("data_buyer_score", ascending=False).head(top_n)[['JobTitle', 'Agency', 'data_buyer_score', use_case_column]]
 
+
+# ------------------------
+# USAJobs Live Search and Score Functions Industry
+# ------------------------
+
+
+
+import pandas as pd
+import requests
+
+def fetch_and_score_top_by_industry_auto(api_key, email, industry_name="Medical", top_n=100):
+    """
+    Scrape USAJobs API, preprocess, assign use cases, score with model, and return top buyers by industry.
+
+    Args:
+        api_key (str): Your USAJobs API Key.
+        email (str): Your email registered with USAJobs API.
+        industry_name (str): Industry to filter (e.g., 'Medical', 'Finance', etc.)
+        top_n (int): Number of top results to return (default 100).
+
+    Returns:
+        pd.DataFrame: Top jobs with Title, Agency, Score, and Use Case.
+    """
+
+    # Import inside to respect package structure
+    from .preprocessing import preprocess_job_api_response
+    from .pipeline import load_pipeline
+
+    headers = {
+        "User-Agent": email,
+        "Authorization-Key": api_key
+    }
+
+    # Your predefined search keywords
+    keywords = [
+        'data', 'contract', 'analyst', 'machine learning', 'marketing', 'aquisition',
+        'finance', 'security', 'tech', 'purchasing', 'statistics', 'math',
+        'data scientist', 'research', 'economist'
+    ]
+
+    url = "https://data.usajobs.gov/api/Search"
+    all_jobs = {}
+
+    # Scrape jobs
+    for keyword in keywords:
+        params = {'Keyword': keyword, 'ResultsPerPage': 500, 'Page': 1}
+        while True:
+            response = requests.get(url, headers=headers, params=params)
+            if response.status_code != 200:
+                break
+            jobs = response.json().get('SearchResult', {}).get('SearchResultItems', [])
+            if not jobs:
+                break
+            for job in jobs:
+                job_id = job.get('MatchedObjectId')
+                if job_id and job_id not in all_jobs:
+                    descriptor = job['MatchedObjectDescriptor']
+                    details = descriptor.get('UserArea', {}).get('Details', {})
+                    all_jobs[job_id] = {
+                        'JobTitle': descriptor.get('PositionTitle'),
+                        'JobDescription': details.get('JobSummary'),
+                        'KeyDuties': details.get('MajorDuties', ''),
+                        'Agency': descriptor.get('OrganizationName')
+                    }
+            params['Page'] += 1
+
+    # Check
+    if not all_jobs:
+        raise ValueError("No jobs found.")
+
+    # Preprocess jobs
+    processed = [preprocess_job_api_response({
+        'PositionTitle': row['JobTitle'],
+        'OrganizationName': row['Agency'],
+        'UserArea': {'Details': {'JobSummary': row['JobDescription'], 'MajorDuties': row['KeyDuties']}}
+    }) for _, row in pd.DataFrame(all_jobs.values()).iterrows()]
+
+    df_processed = pd.concat(processed, ignore_index=True)
+
+    # Score using your internal pipeline
+    pipeline = load_pipeline()
+    X = pipeline.named_steps['preprocessor'].transform(df_processed)
+    df_processed['data_buyer_score'] = pipeline.named_steps['classifier'].predict_proba(X)[:, 1]
+
+    # Assign Use Case automatically
+    usecase_columns = [col for col in df_processed.columns if col.startswith('UseCase_')]
+
+    def assign_detected_usecase(row):
+        for col in usecase_columns:
+            if row[col] == 1:
+                return col.replace('UseCase_', '')
+        return 'General'
+
+    df_processed['DetectedUseCase'] = df_processed.apply(assign_detected_usecase, axis=1)
+
+    # Filter by industry
+    filtered = df_processed[df_processed['Industry'].str.lower() == industry_name.lower()]
+
+    # Sort by score and return
+    top_buyers = filtered.sort_values('data_buyer_score', ascending=False).head(top_n)
+
+    return top_buyers[['JobTitle', 'Agency', 'data_buyer_score', 'DetectedUseCase']]
