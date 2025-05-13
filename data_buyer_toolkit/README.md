@@ -205,7 +205,7 @@ Search the USAJobs API for job postings by job title keyword.
 
 ---
 
-##`batch_fetch_and_score_jobs(job_titles, api_key, email)`
+## `batch_fetch_and_score_jobs(job_titles, api_key, email)`
 
 ```python
 titles = ["Data Analyst", "Contract Specialist", "Program Manager"]
