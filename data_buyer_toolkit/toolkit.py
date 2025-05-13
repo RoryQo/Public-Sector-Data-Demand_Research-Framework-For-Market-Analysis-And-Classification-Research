@@ -246,7 +246,7 @@ def batch_fetch_and_score_jobs(job_titles, api_key, email):
     return pd.DataFrame(results)
 
 # ------------------------
-# USAJobs Live Search and Score Functions Usecase
+# USAJobs Live Search and Score Functions Use Case
 # ------------------------
 
 def fetch_and_score_top_by_use_case_auto(api_key, email, use_case="Fraud", top_n=100):
@@ -304,7 +304,7 @@ def fetch_and_score_top_by_use_case_auto(api_key, email, use_case="Fraud", top_n
 
 
 # ------------------------
-# USAJobs Live Search and Score Functions Industry
+# USAJobs Live Search and Score Functions Industry Auto
 # ------------------------
 
 
@@ -404,3 +404,254 @@ def fetch_and_score_top_by_industry_auto(api_key, email, industry_name="Medical"
     top_buyers = filtered.sort_values('data_buyer_score', ascending=False).head(top_n)
 
     return top_buyers[['JobTitle', 'Agency', 'data_buyer_score', 'DetectedUseCase']]
+
+
+
+# ------------------------
+# USAJobs Live Search and Score Functions Industry Custom
+# ------------------------
+
+
+
+def fetch_top_data_buyers_by_industry_custom(api_key, email, industry_name, top_n=10, search_keywords=None):
+    """
+    Scrape USAJobs API using custom keywords, preprocess, assign use cases, score with model, and return top buyers by industry.
+
+    Args:
+        api_key (str): Your USAJobs API Key.
+        email (str): Your email registered with USAJobs API.
+        industry_name (str): Industry to filter (e.g., 'Medical', 'Finance', etc.)
+        top_n (int): Number of top results to return.
+        search_keywords (list): Custom search keywords to override the default keyword list.
+
+    Returns:
+        pd.DataFrame: Top jobs with Title, Agency, Score, and Use Case.
+    """
+
+    # Import inside to respect package structure
+    from . import preprocess_job_api_response, load_pipeline
+
+    headers = {
+        "User-Agent": email,
+        "Authorization-Key": api_key
+    }
+
+    # Default keywords if none provided
+    if search_keywords is None:
+        search_keywords = [
+            'data', 'contract', 'analyst', 'machine learning', 'marketing', 'aquisition',
+            'finance', 'security', 'tech', 'purchasing', 'statistics', 'math',
+            'data scientist', 'research', 'economist'
+        ]
+
+    url = "https://data.usajobs.gov/api/Search"
+    all_jobs = {}
+
+    # Scrape jobs
+    for keyword in search_keywords:
+        print(f"Searching for keyword: {keyword}")
+        params = {
+            'Keyword': keyword,
+            'ResultsPerPage': 500,
+            'Page': 1
+        }
+        
+        while True:
+            response = requests.get(url, headers=headers, params=params)
+            if response.status_code != 200:
+                print(f"Error {response.status_code}: {response.text}")
+                break
+
+            data = response.json()
+            jobs = data.get('SearchResult', {}).get('SearchResultItems', [])
+            if not jobs:
+                break
+
+            for job in jobs:
+                job_id = job.get('MatchedObjectId')
+                descriptor = job.get('MatchedObjectDescriptor', {})
+                details = descriptor.get('UserArea', {}).get('Details', {})
+
+                if job_id and job_id not in all_jobs:
+                    all_jobs[job_id] = {
+                        'JobTitle': descriptor.get('PositionTitle'),
+                        'Agency': descriptor.get('OrganizationName'),
+                        'JobDescription': details.get('JobSummary'),
+                        'KeyDuties': details.get('MajorDuties', 'N/A')
+                    }
+
+            params['Page'] += 1
+
+    if not all_jobs:
+        raise ValueError("No jobs found.")
+
+    # Preprocess jobs
+    processed_jobs = []
+    for _, job_data in all_jobs.items():
+        job_json = {
+            'PositionTitle': job_data['JobTitle'],
+            'OrganizationName': job_data['Agency'],
+            'UserArea': {
+                'Details': {
+                    'JobSummary': job_data['JobDescription'],
+                    'MajorDuties': job_data['KeyDuties']
+                }
+            }
+        }
+        processed_job = preprocess_job_api_response(job_json)
+        processed_jobs.append(processed_job)
+
+    df_processed = pd.concat(processed_jobs, ignore_index=True)
+
+    # Score jobs
+    pipeline = load_pipeline()
+    X = pipeline.named_steps['preprocessor'].transform(df_processed)
+    df_processed['data_buyer_score'] = pipeline.named_steps['classifier'].predict_proba(X)[:, 1]
+
+    # Infer Use Case
+    usecase_columns = [col for col in df_processed.columns if col.startswith('UseCase_')]
+
+    def assign_detected_usecase(row):
+        for col in usecase_columns:
+            if row[col] == 1:
+                return col.replace('UseCase_', '')
+        return 'General'
+
+    df_processed['DetectedUseCase'] = df_processed.apply(assign_detected_usecase, axis=1)
+
+    # Filter by industry
+    filtered = df_processed[df_processed['Industry'].str.lower() == industry_name.lower()]
+
+    # Sort by score
+    top_buyers = filtered.sort_values('data_buyer_score', ascending=False).head(top_n)
+
+    # Select and return desired columns
+    return top_buyers[['JobTitle', 'Agency', 'data_buyer_score', 'DetectedUseCase']]
+
+
+# ------------------------
+# USAJobs Live Search and Score Functions usecase Custom
+# ------------------------
+
+
+import pandas as pd
+import requests
+
+def fetch_and_score_top_by_use_case_custom(api_key, email, use_case="Fraud", top_n=100, search_keywords=None):
+    """
+    Fetches jobs live from USAJobs API using a predefined or user-supplied keyword list,
+    scores them, and returns the top N jobs matching a specified use case.
+
+    Args:
+        api_key (str): Your USAJobs API Key.
+        email (str): Your registered email for USAJobs API.
+        use_case (str): Use case category ('Fraud', 'Sentiment', 'PatientMatching', 'AdTargeting').
+        top_n (int): Number of top jobs to return.
+        search_keywords (list, optional): List of custom search keywords. Defaults to a standard set.
+
+    Returns:
+        pd.DataFrame: Top N scored jobs matching the specified use case.
+    """
+
+    # Import inside to respect package structure
+    from . import preprocess_job_api_response, load_pipeline
+
+    headers = {
+        "User-Agent": email,
+        "Authorization-Key": api_key
+    }
+
+    # Default keywords if none provided
+    if search_keywords is None:
+        search_keywords = [
+            'data', 'contract', 'analyst', 'machine learning', 'marketing', 'aquisition',
+            'finance', 'security', 'tech', 'purchasing', 'statistics', 'math', 'data scientist',
+            'research', 'economist'
+        ]
+
+    url = "https://data.usajobs.gov/api/Search"
+    all_jobs = {}
+
+    # Loop over each keyword
+    for keyword in search_keywords:
+        print(f"Searching for keyword: {keyword}")
+        params = {
+            'Keyword': keyword,
+            'ResultsPerPage': 500,
+            'Page': 1
+        }
+
+        while True:
+            response = requests.get(url, headers=headers, params=params)
+            if response.status_code != 200:
+                print(f"Error {response.status_code}: {response.text}")
+                break
+
+            data = response.json()
+            jobs = data.get('SearchResult', {}).get('SearchResultItems', [])
+            if not jobs:
+                break
+
+            for job in jobs:
+                job_id = job.get('MatchedObjectId')
+                descriptor = job.get('MatchedObjectDescriptor', {})
+                details = descriptor.get('UserArea', {}).get('Details', {})
+
+                if job_id not in all_jobs:
+                    all_jobs[job_id] = {
+                        'JobID': job_id,
+                        'JobTitle': descriptor.get('PositionTitle'),
+                        'JobDescription': details.get('JobSummary'),
+                        'KeyDuties': details.get('MajorDuties', 'N/A'),
+                        'Department': descriptor.get('OrganizationName'),
+                        'Agency': descriptor.get('DepartmentName'),
+                        'SearchKeywords': [keyword]
+                    }
+                else:
+                    if keyword not in all_jobs[job_id]['SearchKeywords']:
+                        all_jobs[job_id]['SearchKeywords'].append(keyword)
+
+            print(f"Retrieved page {params['Page']} with {len(jobs)} jobs")
+            params['Page'] += 1
+
+    # Convert dictionary to DataFrame
+    df = pd.DataFrame(all_jobs.values())
+
+    if df.empty:
+        raise ValueError("No jobs found across all keywords.")
+
+    # Preprocess all jobs
+    processed_jobs = []
+    for _, row in df.iterrows():
+        job_json = {
+            'PositionTitle': row['JobTitle'],
+            'OrganizationName': row['Agency'],
+            'UserArea': {
+                'Details': {
+                    'JobSummary': row['JobDescription'],
+                    'MajorDuties': row['KeyDuties'],
+                    'JobCategory': ', '.join(row['SearchKeywords'])
+                }
+            }
+        }
+        processed_job = preprocess_job_api_response(job_json)
+        processed_jobs.append(processed_job)
+
+    df_processed = pd.concat(processed_jobs, ignore_index=True)
+
+    # Load pipeline and predict
+    pipeline = load_pipeline()
+    X = pipeline.named_steps['preprocessor'].transform(df_processed)
+    scores = pipeline.named_steps['classifier'].predict_proba(X)[:, 1]
+    df_processed['data_buyer_score'] = scores
+
+    # Filter by use case
+    use_case_column = f"UseCase_{use_case}"
+    if use_case_column not in df_processed.columns:
+        raise ValueError(f"Use case '{use_case}' is not available.")
+
+    filtered = df_processed[df_processed[use_case_column] == 1]
+    ranked = filtered.sort_values("data_buyer_score", ascending=False).head(top_n)
+
+    return ranked[['JobTitle', 'Agency', 'data_buyer_score', use_case_column]]
+
