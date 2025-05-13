@@ -103,12 +103,15 @@ Python Package: data_buyer_toolkit/
 
 ```python
 from data_buyer_toolkit.toolkit import (
-    fetch_and_score_job,
-    batch_fetch_and_score_jobs,
-    search_job_ids_by_title,
-    fetch_and_score_top_by_use_case_auto,
-    preprocess_job_api_response,
     load_pipeline,
+    preprocess_job_api_response,
+    fetch_and_score_job,
+    search_job_ids_by_title,
+    batch_fetch_and_score_jobs,
+    fetch_and_score_top_by_use_case_auto,
+    fetch_top_data_buyers_by_industry_auto,
+    fetch_and_score_top_by_use_case_custom,
+    fetch_top_data_buyers_by_industry_custom,
 )
 ```
 
@@ -263,6 +266,107 @@ Automatically search a broad set of keywords, pull all matches, and rank top-sco
 
 ---
 
+## `fetch_and_score_top_by_use_case_custom(api_key, email, use_case="Fraud", top_n=100, search_keywords=None)`
+
+```python
+fetch_and_score_top_by_use_case_custom(
+    api_key="YOUR_USAJOBS_API_KEY",
+    email="YOUR_EMAIL@example.com",
+    use_case="Fraud",
+    top_n=50,
+    search_keywords=["cybersecurity", "finance", "clinical", "artificial intelligence"])
+```
+
+**Purpose**:  
+Search live USAJobs postings using custom keywords and return top jobs matching a selected use case.
+
+**Inputs**:
+- `api_key` (`str`):  
+  USAJobs API key.
+- `email` (`str`):  
+  USAJobs API email `User-Agent`.
+- `use_case` (`str`, default = `"Fraud"`):  
+  Which use case column to filter and sort on. Options include:
+  - `Fraud`
+  - `Sentiment`
+  - `PatientMatching`
+  - `AdTargeting`
+- `top_n` (`int`, default = 100):  
+  Number of top jobs to return.
+- `search_keywords` (`list`, optional):  
+  Custom search keywords. If none, defaults to a standard keyword list.
+
+**Outputs**:
+- `top_jobs_df` (`pd.DataFrame`):  
+  A DataFrame with top job titles, agencies, and their data buyer scores filtered by the selected use case.
+
+---
+
+## `fetch_top_data_buyers_by_industry_custom(api_key, email, industry_name, top_n=100, search_keywords=None)`
+
+```python
+fetch_top_data_buyers_by_industry_custom(
+    api_key="YOUR_USAJOBS_API_KEY",
+    email="YOUR_EMAIL@example.com",
+    industry_name="Security/Tech",
+    top_n=30,
+    search_keywords=["software engineering", "cybersecurity", "cloud", "AI"])
+```
+
+**Purpose**:  
+Search live USAJobs postings using custom keywords and return top jobs matching a selected industry.
+
+**Inputs**:
+- `api_key` (`str`):  
+  USAJobs API key.
+- `email` (`str`):  
+  USAJobs API email `User-Agent`.
+- `industry_name` (`str`):  
+  Industry to filter on. Options include:
+  - `Medical`
+  - `Finance`
+  - `Marketing`
+  - `Policy`
+  - `Security/Tech`
+  - `Other`
+- `top_n` (`int`, default = 100):  
+  Number of top jobs to return.
+- `search_keywords` (`list`, optional):  
+  Custom search keywords. If none, defaults to a standard keyword list.
+
+**Outputs**:
+- `top_buyers_df` (`pd.DataFrame`):  
+  A DataFrame with top job titles, agencies, their buyer scores, and detected use cases.
+
+---
+
+## `fetch_top_data_buyers_by_industry_auto(api_key, email, industry_name="Medical", top_n=100)`
+
+**Purpose**:  
+Search live USAJobs postings using a standard keyword list and return top jobs matching a selected industry.
+
+**Inputs**:
+- `api_key` (`str`):  
+  USAJobs API key.
+- `email` (`str`):  
+  USAJobs API email `User-Agent`.
+- `industry_name` (`str`, default = `"Medical"`):  
+  Industry to filter on. Options include:
+  - `Medical`
+  - `Finance`
+  - `Marketing`
+  - `Policy`
+  - `Security/Tech`
+  - `Other`
+- `top_n` (`int`, default = 100):  
+  Number of top jobs to return.
+
+**Outputs**:
+- `top_buyers_df` (`pd.DataFrame`):  
+  A DataFrame with top job titles, agencies, their buyer scores, and detected use cases.
+
+---
+
 # Quick Visual Summary
 
 | Function | Input | Output |
@@ -273,6 +377,9 @@ Automatically search a broad set of keywords, pull all matches, and rank top-sco
 | `search_job_ids_by_title()` | `position_title`, `api_key`, `email`, `max_results` | List of job dicts |
 | `batch_fetch_and_score_jobs()` | List of titles, `api_key`, `email` | Results DataFrame |
 | `fetch_and_score_top_by_use_case_auto()` | `api_key`, `email`, `use_case`, `top_n` | Top jobs DataFrame |
+| `fetch_top_data_buyers_by_industry_auto()` | `api_key`, `email`, `industry_name`, `top_n` | Top buyers DataFrame |
+| `fetch_and_score_top_by_use_case_custom()` | `api_key`, `email`, `use_case`, `top_n`, `search_keywords` | Top jobs DataFrame |
+| `fetch_top_data_buyers_by_industry_custom()` | `api_key`, `email`, `industry_name`, `top_n`, `search_keywords` | Top buyers DataFrame |
 
 ---
 
@@ -280,12 +387,15 @@ Automatically search a broad set of keywords, pull all matches, and rank top-sco
 
 | Situation | Recommended Function |
 |:----------|:----------------------|
-| You want to **load the trained machine learning model** | `load_pipeline()` |
-| You have a **raw USAJobs API job posting** and want to **prepare it for scoring** | `preprocess_job_api_response(job_json)` |
-| You know a **specific job ID** and want to **score that job** | `fetch_and_score_job(job_id, api_key, email)` |
-| You know a **job title keyword** and want to **find matching job IDs** | `search_job_ids_by_title(position_title, api_key, email)` |
-| You have a **list of job titles** and want to **batch search and score them** | `batch_fetch_and_score_jobs(job_titles, api_key, email)` |
-| You want to **search broadly across many jobs** and **filter top scoring jobs by a specific use case** (like fraud detection) | `fetch_and_score_top_by_use_case_auto(api_key, email, use_case)` |
+| Load the trained machine learning model | `load_pipeline()` |
+| Preprocess a raw USAJobs API posting | `preprocess_job_api_response(job_json)` |
+| Score a job by specific USAJobs ID | `fetch_and_score_job(job_id, api_key, email)` |
+| Search by job title keyword | `search_job_ids_by_title(position_title, api_key, email)` |
+| Batch search and score multiple titles | `batch_fetch_and_score_jobs(job_titles, api_key, email)` |
+| Search broadly using default keywords and filter by use case | `fetch_and_score_top_by_use_case_auto(api_key, email, use_case)` |
+| Search broadly using default keywords and filter by industry | `fetch_top_data_buyers_by_industry_auto(api_key, email, industry_name)` |
+| Search with custom keywords and filter by use case | `fetch_and_score_top_by_use_case_custom(api_key, email, use_case, search_keywords)` |
+| Search with custom keywords and filter by industry | `fetch_top_data_buyers_by_industry_custom(api_key, email, industry_name, search_keywords)` |
 
 ---
 
