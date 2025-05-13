@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "data_buyer_toolkit"
-version = "0.1.2"  # bump to 0.1.1 for republishing
+version = "0.1.3"  # bump to 0.1.1 for republishing
 description = "Toolkit for identifying third-party data buyers in U.S. federal job postings from USAJobs."
 readme = "data_buyer_toolkit/README.md"
 requires-python = ">=3.8"
