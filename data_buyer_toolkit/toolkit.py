@@ -327,8 +327,8 @@ def fetch_and_score_top_by_industry_auto(api_key, email, industry_name="Medical"
     """
 
     # Import inside to respect package structure
-    from .preprocessing import preprocess_job_api_response
-    from .pipeline import load_pipeline
+    processed_job = preprocess_job_api_response(job_json)
+    pipeline = load_pipeline()
 
     headers = {
         "User-Agent": email,
@@ -429,8 +429,8 @@ def fetch_top_data_buyers_by_industry_custom(api_key, email, industry_name, top_
     """
 
     # Import inside to respect package structure
-    from . import preprocess_job_api_response, load_pipeline
-
+    processed_job = preprocess_job_api_response(job_json)
+    pipeline = load_pipeline()
     headers = {
         "User-Agent": email,
         "Authorization-Key": api_key
@@ -554,7 +554,8 @@ def fetch_and_score_top_by_use_case_custom(api_key, email, use_case="Fraud", top
     """
 
     # Import inside to respect package structure
-    from . import preprocess_job_api_response, load_pipeline
+    processed_job = preprocess_job_api_response(job_json)
+    pipeline = load_pipeline()
 
     headers = {
         "User-Agent": email,
