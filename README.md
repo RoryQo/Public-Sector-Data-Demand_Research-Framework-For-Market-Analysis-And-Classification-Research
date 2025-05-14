@@ -7,7 +7,7 @@
 
 <p align="center">
   <a href="https://pypi.org/project/data-buyer-toolkit/">
-    <img src="https://img.shields.io/static/v1?label=PyPI&message=data-buyer-toolkit%20v0.1.7&color=blue&logo=pypi&logoColor=white" alt="PyPI package">
+    <img src="https://img.shields.io/static/v1?label=PyPI&message=data-buyer-toolkit%20v0.1.8&color=blue&logo=pypi&logoColor=white" alt="PyPI package">
   </a>
 </p>
 
