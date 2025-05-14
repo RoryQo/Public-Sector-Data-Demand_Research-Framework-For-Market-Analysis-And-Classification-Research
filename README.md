@@ -1,4 +1,4 @@
-<h1 align="center"> Targeting Data Buyers in the Public Sector:<br> A Predictive Modeling and Market Strategy Guide</h1>
+<h1 align="center"> Targeting Data Buyers in the Public Sector:<br> A Predictive Modeling and Market Strategy Guide</h1> 
 
 
   <h2 align="center"; style="margin: 0; color: #333; font-weight: bold;">🚧 Under Consideration for Publication</h2>
