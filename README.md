@@ -1,21 +1,30 @@
 <h1 align="center"> Targeting Data Buyers in the Public Sector:<br> A Predictive Modeling and Market Strategy Guide</h1> 
 
 
-  <h2 align="center"; style="margin: 0; color: #333; font-weight: bold;">🚧 Under Consideration for Publication</h2>
-  <p  align="center"; style="margin: 5px 0 0; font-size: 14px; color: #555;">This project is currently a submission to an academic journal</p>
-
-
-<p align="center">
-  <a href="https://github.com/RoryQo/Public-Sector-Data-Demand_Research-Framework-For-Market-Analysis-And-Classification/raw/main/Submitted%20Manuscript%20%E2%80%93%20Under%20Review%20at%20Discover%20Data.pdf" download>
-    <img src="https://img.shields.io/badge/Download%20Full%20Paper-PDF-blue?logo=adobeacrobatreader&logoColor=white" alt="Download Full Paper">
-  </a>
+  <p align="center">
+  <strong style="display: inline-block; padding: 10px 20px; background-color: #444; color: white; font-weight: 900; border-radius: 6px;">
+    🚧 Under Consideration for Publication
+  </strong>
 </p>
+
+<p align="center"><em>This project is currently a submission to an academic journal</em></p>
+
+
+
+
 
 <p align="center">
   <a href="https://pypi.org/project/data-buyer-toolkit/">
     <img src="https://img.shields.io/static/v1?label=PyPI&message=data-buyer-toolkit%20v0.1.8&color=blue&logo=pypi&logoColor=white" alt="PyPI package">
   </a>
 </p>
+
+<p align="center">
+  <a href="https://github.com/RoryQo/Public-Sector-Data-Demand_Research-Framework-For-Market-Analysis-And-Classification/raw/main/Submitted%20Manuscript%20%E2%80%93%20Under%20Review%20at%20Discover%20Data.pdf" download>
+    <img src="https://img.shields.io/badge/Download_Full_Paper-PDF-lightgrey?style=social&logo=adobeacrobatreader&logoColor=white" alt="Download Full Paper">
+  </a>
+</p>
+
 
 
 
