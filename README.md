@@ -6,7 +6,7 @@
 
 
 <p align="center">
-  <a href="https://github.com/RoryQo/Public-Sector-Data-Demand_Research-Framework-For-Market-Analysis-And-Classification/blob/main/Submitted%20Manuscript%20%E2%80%93%20Under%20Review%20at%20Discover%20Data.pdf?raw=true" download>
+  <a href="https://github.com/RoryQo/Public-Sector-Data-Demand_Research-Framework-For-Market-Analysis-And-Classification/raw/main/Submitted%20Manuscript%20%E2%80%93%20Under%20Review%20at%20Discover%20Data.pdf" download>
     <img src="https://img.shields.io/badge/Download%20Full%20Paper-PDF-blue?logo=adobeacrobatreader&logoColor=white" alt="Download Full Paper">
   </a>
 </p>
