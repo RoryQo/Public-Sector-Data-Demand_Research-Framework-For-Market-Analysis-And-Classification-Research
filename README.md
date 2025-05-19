@@ -6,6 +6,12 @@
 
 
 <p align="center">
+  <a href="https://github.com/RoryQo/Public-Sector-Data-Demand_Research-Framework-For-Market-Analysis-And-Classification/blob/main/Submitted%20Manuscript%20%E2%80%93%20Under%20Review%20at%20Discover%20Data.pdf?raw=true" download>
+    <img src="https://img.shields.io/badge/Download%20Full%20Paper-PDF-blue?logo=adobeacrobatreader&logoColor=white" alt="Download Full Paper">
+  </a>
+</p>
+
+<p align="center">
   <a href="https://pypi.org/project/data-buyer-toolkit/">
     <img src="https://img.shields.io/static/v1?label=PyPI&message=data-buyer-toolkit%20v0.1.8&color=blue&logo=pypi&logoColor=white" alt="PyPI package">
   </a>
