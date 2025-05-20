@@ -10,8 +10,11 @@
 <p align="center"><em>This project is currently a submission to an academic journal</em></p>
 
 
-
-
+<p align="center">
+  <a href="https://github.com/RoryQo/Public-Sector-Data-Demand_Research-Framework-For-Market-Analysis-And-Classification/actions/workflows/test.yml">
+    <img src="https://github.com/RoryQo/Public-Sector-Data-Demand_Research-Framework-For-Market-Analysis-And-Classification/actions/workflows/test.yml/badge.svg" alt="Run Tests">
+  </a>
+</p>
 
 <p align="center">
   <a href="https://pypi.org/project/data-buyer-toolkit/">
