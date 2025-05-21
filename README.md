@@ -3,11 +3,11 @@
 
   <p align="center">
   <strong style="display: inline-block; padding: 10px 20px; background-color: #444; color: white; font-weight: 900; border-radius: 6px;">
-    🚧 Under Consideration for Publication
+
   </strong>
 </p>
 
-<p align="center"><em>This project is currently a submission to an academic journal</em></p>
+<p align="center"><em>This project is currently a submission to an academic journal (JOSS) </em></p>
 
 
 
