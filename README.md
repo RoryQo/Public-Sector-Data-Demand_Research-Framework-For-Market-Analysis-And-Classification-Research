@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/RoryQo/Public-Sector-Data-Demand_Research-Framework-For-Market-Analysis-And-Classification/raw/main/Submitted%20Manuscript%20%E2%80%93%20Under%20Review%20at%20Discover%20Data.pdf" download>
+  <a href="https://github.com/RoryQo/Public-Sector-Data-Demand_Research-Framework-For-Market-Analysis-And-Classification/raw/main/Manuscript.pdf" download>
     <img src="https://img.shields.io/badge/Download_Full_Paper-PDF-lightgrey?style=social&logo=adobeacrobatreader&logoColor=white" alt="Download Full Paper">
   </a>
 </p>
