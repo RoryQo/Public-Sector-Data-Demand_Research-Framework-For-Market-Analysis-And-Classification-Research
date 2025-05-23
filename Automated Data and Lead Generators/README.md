@@ -165,7 +165,7 @@ All dependencies are listed in `reqs.txt`.
 
 This project is licensed under the **MIT License**, an OSI-approved permissive license that allows reuse, modification, and distribution with proper attribution.
 
-See the [LICENSE](./LICENSE) file for full terms.
+See the [LICENSE](../LICENSE) file for full terms.
 
 
 ## Future Contributions
