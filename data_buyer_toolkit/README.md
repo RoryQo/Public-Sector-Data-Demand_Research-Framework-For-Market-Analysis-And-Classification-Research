@@ -66,7 +66,7 @@
 
 ## Overview
 
-The `data_buyer_toolkit` package is a modular, published Python library for analyzing, preprocessing, and scoring U.S. federal job postings for third-party data acquisition demand. 
+The `data_demand_mapper` package is a modular, published Python library for analyzing, preprocessing, and scoring U.S. federal job postings for third-party data acquisition demand. 
 
 It is a core component of the broader **Public Sector Data Demand Research Framework**, but can also be used independently as a lightweight toolkit for real-time job analysis and data buyer detection.
 
