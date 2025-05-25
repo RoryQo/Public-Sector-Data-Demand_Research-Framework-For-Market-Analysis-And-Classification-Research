@@ -7,9 +7,9 @@
   </strong>
 </p>
 
-<p align="center"><em>This project is currently a submission to an academic journal (JOSS) </em></p>
-
-
+<p align="center">
+  <em>This package is currently under consideration for publication in the <a href="https://joss.theoj.org/">Journal of Open Source Software (JOSS)</a>.</em>
+</p>
 
 
 <p align="center">
