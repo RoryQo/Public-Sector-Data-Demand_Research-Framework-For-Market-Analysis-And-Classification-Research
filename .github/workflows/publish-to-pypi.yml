@@ -2,7 +2,7 @@ name: Upload Python Package
 
 on:
   release:
-    types: [published]  # Trigger only when a new release is published
+    types: [published]  # Trigger when a new GitHub release is published
 
 jobs:
   upload-to-pypi:
