@@ -1,4 +1,4 @@
-<h1 align="center">Data Buyer Toolkit — Function Documentation</h1>
+<h1 align="center">Data Demand Mapper — Function Documentation</h1>
 
 
 
@@ -87,7 +87,7 @@ Root Directory:
 ├── pyproject.toml
 
 
-Python Package: data_buyer_toolkit/
+Python Package: data_demand_mapper/
 ├── __init__.py
 ├── toolkit.py
 ├── nlp_pipeline_with_smote.joblib
@@ -103,7 +103,7 @@ Python Package: data_buyer_toolkit/
 ## `Import the Package`
 
 ```python
-from data_buyer_toolkit.toolkit import (
+from data_demand_mapper.toolkit import (
     load_pipeline,
     preprocess_job_api_response,
     fetch_and_score_job,
@@ -407,12 +407,12 @@ Search live USAJobs postings using a standard keyword list and return top jobs m
 You can install the package directly from PyPI:
 
 ```bash
-pip install data-buyer-toolkit
+pip install data-demand-mapper
 ```
 
 
 Or for local development (editable mode with GitHub clone):
-- Follow these steps to fully install and set up the `data_buyer_toolkit` for local development or usage inside Jupyter notebooks.
+- Follow these steps to fully install and set up the `data_demand_mapper` for local development or usage inside Jupyter notebooks.
 
 
 ## Local Dev Install
