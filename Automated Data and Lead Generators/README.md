@@ -12,7 +12,7 @@
       1. <a href="#project-overview" style="color: black;">Project Overview</a>
     </td>
     <td align="center" style="background-color: gray; color: black; padding: 10px;">
-      2. <a href="#data-buyer-toolkit-python-package" style="color: black;">Data Buyer Toolkit (Python Package)</a>
+      2. <a href="#data-demand-mapper-python-package" style="color: black;">Data Demand Mapper (Python Package)</a>
     </td>
   </tr>
 
@@ -55,7 +55,7 @@ and is supplemented by a modular Python package for easy integration of scoring 
 
 This project is fully automated from **data acquisition to model deployment**, using two modular notebooks:
 
-## Data Buyer Toolkit (Python Package)
+## Data Demand Mapper (Python Package)
 
 
 [![PyPI version](https://img.shields.io/pypi/v/data-buyer-toolkit?color=success&label=PyPI&logo=pypi&logoColor=white)](https://pypi.org/project/data-buyer-toolkit/)
@@ -70,7 +70,7 @@ This project is fully automated from **data acquisition to model deployment**, u
 
 In addition to the main notebooks, this repository includes a standalone python package.
 
-The **Data Buyer Toolkit** provides lightweight, reusable Python functions for:
+The **Data Demand Mapper** provides lightweight, reusable Python functions for:
 
 - **Fetching and scoring a single job by ID** (`fetch_and_score_job`)
 - **Searching USAJobs live by keyword and scoring results** (`search_and_score_keyword_live`)
