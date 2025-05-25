@@ -14,9 +14,10 @@
 
 <p align="center">
   <a href="https://pypi.org/project/data-buyer-toolkit/">
-    <img src="https://img.shields.io/static/v1?label=PyPI&message=data-buyer-toolkit%20v0.1.8&color=blue&logo=pypi&logoColor=white" alt="PyPI package">
+    <img src="https://img.shields.io/static/v1?label=PyPI&message=data-demand-mapper%20v0.2.0&color=blue&logo=pypi&logoColor=white" alt="PyPI package">
   </a>
 </p>
+
 
 <p align="center">
   <a href="https://github.com/RoryQo/Public-Sector-Data-Demand_Research-Framework-For-Market-Analysis-And-Classification/raw/main/Manuscript.pdf" download>
