@@ -14,7 +14,7 @@
 
 <p align="center">
   <a href="https://pypi.org/project/data-buyer-toolkit/">
-    <img src="https://img.shields.io/static/v1?label=PyPI&message=data-demand-mapper%20v0.2.1&color=blue&logo=pypi&logoColor=white" alt="PyPI package">
+    <img src="https://img.shields.io/static/v1?label=PyPI&message=data-demand-mapper%20v0.2.3&color=blue&logo=pypi&logoColor=white" alt="PyPI package">
   </a>
 </p>
 
