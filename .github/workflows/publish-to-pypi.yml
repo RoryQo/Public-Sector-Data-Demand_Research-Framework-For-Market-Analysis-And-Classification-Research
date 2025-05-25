@@ -1,9 +1,8 @@
 name: Upload Python Package
 
-#on:
- # push:
-  #  branches:
-   #   - main  # Only trigger when pushing to the main branch
+on:
+  release:
+    types: [published]  # Trigger only when a new release is published
 
 jobs:
   upload-to-pypi:
@@ -19,7 +18,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'   # or specify '3.11' if you want
+          python-version: '3.x'
 
       - name: Install build tool
         run: |
