@@ -3,10 +3,10 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "data_buyer_toolkit"
-version = "0.1.8"  # bump to 0.1.1 for republishing
-description = "Toolkit for identifying third-party data buyers in U.S. federal job postings from USAJobs."
-readme = "data_buyer_toolkit/README.md"
+name = "data_lead_mapper"
+version = "0.2.0"  # bump to 0.1.1 for republishing
+description = "package for identifying and scoring third-party data buyers in U.S. federal job postings from USAJobs."
+readme = "data_lead_mapper/README.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}
 authors = [
@@ -27,7 +27,7 @@ dependencies = [
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["data_buyer_toolkit", "data_buyer_toolkit.*"]
+include = ["data_lead_mapper", "data_lead_mapper.*"]
 
 [tool.setuptools.package-data]
 "data_buyer_toolkit" = ["*.joblib"]
