@@ -58,7 +58,7 @@ This project is fully automated from **data acquisition to model deployment**, u
 ## Data Demand Mapper (Python Package)
 
 
-[![PyPI version](https://img.shields.io/pypi/v/data-buyer-toolkit?color=success&label=PyPI&logo=pypi&logoColor=white)](https://pypi.org/project/data-buyer-toolkit/)
+[![PyPI version](https://img.shields.io/pypi/v/data-lead-mapper?color=success&label=PyPI&logo=pypi&logoColor=white)](https://pypi.org/project/data-lead-mapper/)
 
 
 
