@@ -1,4 +1,4 @@
-<h1 align="center"> Targeting Data Buyers in the Public Sector:<br> A Predictive Modeling and Market Strategy Guide</h1> 
+<h1 align="center"> Targeting Data Buyers in the Public Sector:<br> A Predictive Modeling and Market Strategy Guide</h1>  
  
 
   <p align="center">
