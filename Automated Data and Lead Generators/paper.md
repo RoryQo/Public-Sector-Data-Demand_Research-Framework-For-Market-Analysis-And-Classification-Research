@@ -40,7 +40,7 @@ to estimate this demand through job descriptions in the available posts. Additio
 
 # Acknowledgments
 
-This project was completed during master's degree studies at the University of Pittsburgh. We thank Editage (https://editage.com) for English language editing support and acknowledge the university faculty for their support and instruction throughout the program.
+This project was completed during master's degree studies at the University of Pittsburgh. We thank Editage for English language editing support and acknowledge the university faculty for their support and instruction throughout the program.
 
 \clearpage
 
