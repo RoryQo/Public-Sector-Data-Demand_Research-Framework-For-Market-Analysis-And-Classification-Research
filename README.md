@@ -13,10 +13,11 @@
 
 
 <p align="center">
-  <a href="https://pypi.org/project/data-buyer-toolkit/">
+  <a href="https://pypi.org/project/data-demand-mapper/">
     <img src="https://img.shields.io/static/v1?label=PyPI&message=data-demand-mapper%20v0.2.4&color=blue&logo=pypi&logoColor=white" alt="PyPI package">
   </a>
 </p>
+
 
 
 <p align="center">
