@@ -95,7 +95,7 @@ This project introduces a modular framework for detecting and prioritizing deman
 By combining data acquisition, structured feature engineering, weak supervision, and natural language processing (NLP) modeling, the framework surfaces both explicit and latent roles involved in external data procurement — even when not labeled directly. Job postings are enriched with agency, industry, seniority, and role context, then classified based on linguistic and metadata patterns to generate a ranked list of likely third-party data buyers.
 
 The framework is operationalized through two complementary components included in this repository:  
-the `data_buyer_toolkit` Python package, which provides modular functions for job fetching, preprocessing, and real-time scoring; and a pair of fully automated notebooks that handle end-to-end data acquisition, labeling, modeling, and lead generation.  
+the `data_demand_mapper` Python package, which provides modular functions for job fetching, preprocessing, and real-time scoring; and a pair of fully automated notebooks that handle end-to-end data acquisition, labeling, modeling, and lead generation.  
 These implementations allow users to either run the entire pipeline automatically or flexibly integrate components into their own workflows, CRM systems, or market research tools.
 
 While this release focuses on U.S. federal jobs via USAJobs.gov, the underlying framework is designed for scalability.  
