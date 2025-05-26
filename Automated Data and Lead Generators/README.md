@@ -79,7 +79,7 @@ The **Data Demand Mapper** provides lightweight, reusable Python functions for:
 These functions allow users to **integrate third-party data buyer detection into their own workflows**,  
 without needing to manually run the full notebooks.
 
-See the `data_buyer_toolkit` folder for installation instructions and usage examples.
+See the `data_demand_mapper` folder for installation instructions and usage examples.
 
 
 
