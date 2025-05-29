@@ -5,6 +5,7 @@ tags:
   - Demand Modeling
   - Market Research
   - Economics
+
 authors:
   - name: Rory G. Quinlan
     orcid: 0009-0006-7483-6769
@@ -14,11 +15,12 @@ affiliations:
   - name: University of Pittsburgh
     index: 1
     ror: 00hx57361
-date: 03 May 2025
+date: 3 May 2025
 bibliography: paper.bib
 nocite: |
   @*
 ---
+
 
 # Summary
 
@@ -41,7 +43,7 @@ to estimate this demand through job descriptions in the available posts. Additio
 # Acknowledgments
 
 This project was completed during master's degree studies at the University of Pittsburgh. We thank Editage for English language editing support and acknowledge the university faculty for their support and instruction throughout the program.
-
+\clearpage
 
 
 # References
