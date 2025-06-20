@@ -23,10 +23,6 @@
   </a>
 </p>
 
-<p align="center">
-<a href="https://joss.theoj.org/papers/da08e84fc798a2f4643b8612d7fbab25"><img src="https://joss.theoj.org/papers/da08e84fc798a2f4643b8612d7fbab25/status.svg"></a>
-  </a>
-</p>
 
 <table align="center">
   <tr>
