@@ -854,4 +854,4 @@ This project can be extended into a **full data buyer discovery engine** by addi
 > **Note:** Make sure to download the accompanying pipeline files (`.pkl`), which are required for loading the model and running predictions in `Automated Modeling and Lead Generating.ipynb`.
 >  Simply update the file paths and USAJobs API key in the acquisition notebook, and the entire process will run start-to-finish — from pulling raw job data to generating export-ready lead lists.
 
-## Portions of this README and the associated documentation were written with the assistance of ChatGPT to improve clarity, formatting, and technical explanation.
+*Portions of this README and the associated documentation were written with the assistance of ChatGPT to improve clarity, formatting, and technical explanation. All conclusions are the authors own*
